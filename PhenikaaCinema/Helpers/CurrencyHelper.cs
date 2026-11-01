@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 
-namespace PhenikaaCinema
+namespace PhenikaaCinema.Helpers
 {
     public static class CurrencyHelper
     {

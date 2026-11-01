@@ -1,7 +1,7 @@
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 
-namespace PhenikaaCinema
+namespace PhenikaaCinema.Helpers
 {
     public static class ValidationHelper
     {

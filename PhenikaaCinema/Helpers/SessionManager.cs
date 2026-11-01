@@ -1,6 +1,6 @@
 using System;
 
-namespace PhenikaaCinema
+namespace PhenikaaCinema.Helpers
 {
     public static class SessionManager
     {
