@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using PhenikaaCinema.Services;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Booking
 {

@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using PhenikaaCinema.Services;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Graphics
 {

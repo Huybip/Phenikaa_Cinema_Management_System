@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Admin
 {

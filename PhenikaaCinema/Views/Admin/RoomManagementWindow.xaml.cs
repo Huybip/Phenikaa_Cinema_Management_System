@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Admin
 {

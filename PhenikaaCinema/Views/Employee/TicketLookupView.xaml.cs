@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using PhenikaaCinema.Services;
 using PhenikaaCinema.Views.Booking;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Employee
 {

@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using PhenikaaCinema.Data;
 using PhenikaaCinema.Models;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Services
 {

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using PhenikaaCinema.Services;
 using PhenikaaCinema.Views.Booking;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Customer
 {

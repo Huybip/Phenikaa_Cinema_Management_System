@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using PhenikaaCinema.Services;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Graphics
 {

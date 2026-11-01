@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using PhenikaaCinema.Services;
 using System.Diagnostics;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema
 {

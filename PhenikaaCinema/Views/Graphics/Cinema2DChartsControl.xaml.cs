@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using PhenikaaCinema.Services;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Graphics
 {

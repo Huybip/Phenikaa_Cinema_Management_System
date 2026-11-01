@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Graphics
 {

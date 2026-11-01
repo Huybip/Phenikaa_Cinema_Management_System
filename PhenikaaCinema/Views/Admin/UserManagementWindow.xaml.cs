@@ -6,6 +6,7 @@ using System.Linq;
 using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Views.Admin
 {

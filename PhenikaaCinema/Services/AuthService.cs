@@ -3,6 +3,7 @@ using PhenikaaCinema.Models;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using PhenikaaCinema.Helpers;
 
 namespace PhenikaaCinema.Services
 {
