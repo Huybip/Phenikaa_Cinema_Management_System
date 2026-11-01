@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <connectionStrings>
+        <add name="CinemaDb"
+             connectionString="Data Source=YOUR_SERVER;
+             Initial Catalog=YOUR_DATABASE;
+             User ID=YOUR_USERNAME;
+             Password=YOUR_PASSWORD;
+             Encrypt=True;
+             TrustServerCertificate=True;"
+             providerName="System.Data.SqlClient" />
+    </connectionStrings>
+</configuration>

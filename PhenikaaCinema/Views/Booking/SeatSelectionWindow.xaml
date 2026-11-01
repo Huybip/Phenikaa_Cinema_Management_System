@@ -1,0 +1,125 @@
+﻿<Window x:Class="PhenikaaCinema.Views.Booking.SeatSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:graphics="clr-namespace:PhenikaaCinema.Views.Graphics"
+        Title="Sơ đồ phòng chiếu &amp; Chọn ghế - PHENIKAA CINEMA" 
+        Height="820" Width="1180"
+        MinHeight="700" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BgMain}"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <!-- Tab Toggle Buttons -->
+        <Style x:Key="ModeToggleButton" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="TabBorder" Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="{StaticResource PrimaryBlue}"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource PrimaryBlue}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="88"/>
+        </Grid.RowDefinitions>
+
+        <!-- TOP BAR: MOVIE & SHOWTIME INFO + 2D/3D MODE SWITCH (White Card Header) -->
+        <Border Grid.Row="0" Background="White" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,1" Padding="25,0" Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- BRAND & SHOWTIME INFO -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="PHENIKAA" Foreground="{StaticResource PrimaryBlue}" FontSize="20" FontWeight="Black" Margin="0,0,5,0"/>
+                    <TextBlock Text="CINEMA" Foreground="{StaticResource AccentOrange}" FontSize="20" FontWeight="Bold"/>
+                    <Border Background="{StaticResource LightBlue}" CornerRadius="6" Padding="8,4" Margin="14,0,10,0" VerticalAlignment="Center">
+                        <TextBlock x:Name="RoomBadgeText" Text="Phòng 1" Foreground="{StaticResource DarkBlue}" FontSize="12" FontWeight="Bold"/>
+                    </Border>
+                    <TextBlock x:Name="HeaderMovieTitle" Text="Tên phim" Foreground="{StaticResource TextMain}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="HeaderShowtime" Text=" - 18:00, 30/10" Foreground="{StaticResource TextSecondary}" FontSize="13" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 2D / 3D SWITCH BAR -->
+                <Border Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Background="{StaticResource BgMain}" CornerRadius="10" Padding="4" BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="Radio2DMode" Content="🗺  Sơ đồ 2D (Chọn ghế)" IsChecked="True" 
+                                     Style="{StaticResource ModeToggleButton}" Checked="RadioMode_Checked"/>
+                        <RadioButton x:Name="Radio3DMode" Content="🕶  Không gian 3D rạp chiếu" 
+                                     Style="{StaticResource ModeToggleButton}" Checked="RadioMode_Checked"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- RIGHT CONTROLS -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="✕  Đóng" Style="{StaticResource GhostButton}" Height="36" Click="CloseButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- MAIN VIEW HOST: 2D SEAT MAP OR 3D CINEMA ROOM -->
+        <Grid Grid.Row="1" Background="{StaticResource BgMain}">
+            <!-- 2D GRAPHICS VIEW -->
+            <graphics:SeatMap2DControl x:Name="SeatMapControl" Visibility="Visible"/>
+
+            <!-- 3D VIEWPORT ROOM SIMULATION -->
+            <graphics:CinemaRoom3DView x:Name="Cinema3DControl" Visibility="Collapsed"/>
+        </Grid>
+
+        <!-- BOTTOM BOOKING SUMMARY & PROCEED ACTION (White Card Footer) -->
+        <Border Grid.Row="2" Background="White" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,1,0,0" Padding="32,12" Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- SELECTED SEATS INFO & TOTAL PRICE -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                        <TextBlock Text="Ghế đang chọn: " Foreground="{StaticResource TextSecondary}" FontSize="13"/>
+                        <TextBlock x:Name="SelectedSeatsText" Text="Chưa chọn ghế nào" Foreground="{StaticResource PrimaryBlue}" FontSize="14" FontWeight="Bold"/>
+                        <TextBlock Text=" (Tối đa 8 ghế)" Foreground="{StaticResource TextSecondary}" FontSize="12" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Tổng thanh toán: " Foreground="{StaticResource TextSecondary}" FontSize="13" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TotalPriceText" Text="0 đ" Foreground="{StaticResource AccentOrange}" FontSize="22" FontWeight="ExtraBold" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- ACTION BUTTONS -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="🔄  Tải lại sơ đồ" Style="{StaticResource SecondaryButton}" Height="44" Margin="0,0,14,0" Click="RefreshSeats_Click"/>
+                    <Button x:Name="ProceedBookingButton" Content="TIẾP TỤC ĐẶT VÉ →" Style="{StaticResource AccentButton}" Height="44" Padding="28,0" FontSize="14" FontWeight="Bold" IsEnabled="False" Click="ProceedBookingButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,222 @@
+﻿<UserControl x:Class="PhenikaaCinema.Views.Employee.SellTicketView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1150"
+             Background="#F4F8FC">
+
+    <UserControl.Resources>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#1769AA"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="OrangeButton" TargetType="Button">
+            <Setter Property="Background" Value="#F58220"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- TIÊU ĐỀ -->
+            <Border Grid.Row="0" Background="#124B7A" CornerRadius="12" Padding="20" Margin="0,0,0,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="BÁN VÉ TẠI QUẦY (POS)" FontSize="22" FontWeight="ExtraBold" Foreground="White"/>
+                        <TextBlock Text="Hỗ trợ nhân viên bán vé trực tiếp cho khách hàng tại rạp" FontSize="13" Foreground="#BBD7ED" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="🔄 Đặt lại form" Style="{StaticResource ActionButton}" Background="#1E5C92" Click="BtnReset_Click"/>
+                </Grid>
+            </Border>
+
+            <!-- 2 CỘT QUY TRÌNH BÁN VÉ -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- CỘT TRÁI: CHỌN PHIM, SUẤT CHIẾU, GHẾ -->
+                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                    <!-- BƯỚC 1: CHỌN PHIM -->
+                    <Border Background="White" CornerRadius="12" Padding="20" BorderBrush="#E1EAF2" BorderThickness="1" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="1. CHỌN BỘ PHIM" FontSize="15" FontWeight="Bold" Foreground="#15324B" Margin="0,0,0,10"/>
+                            <ComboBox x:Name="MovieComboBox" Height="38" VerticalContentAlignment="Center" 
+                                      DisplayMemberPath="Title" SelectedValuePath="MovieId"
+                                      SelectionChanged="MovieComboBox_SelectionChanged"/>
+                            <TextBlock x:Name="MovieDetailText" Text="Vui lòng chọn phim để tiếp tục" Foreground="#63778A" FontSize="12" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- BƯỚC 2: CHỌN SUẤT CHIẾU -->
+                    <Border Background="White" CornerRadius="12" Padding="20" BorderBrush="#E1EAF2" BorderThickness="1" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="2. CHỌN SUẤT CHIẾU" FontSize="15" FontWeight="Bold" Foreground="#15324B" Margin="0,0,0,10"/>
+                            <ComboBox x:Name="ShowtimeComboBox" Height="38" VerticalContentAlignment="Center"
+                                      DisplayMemberPath="FormattedShowtime" SelectedValuePath="ShowtimeId"
+                                      SelectionChanged="ShowtimeComboBox_SelectionChanged"/>
+                            <TextBlock x:Name="ShowtimeDetailText" Text="Vui lòng chọn suất chiếu" Foreground="#63778A" FontSize="12" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- BƯỚC 3: CHỌN GHẾ NGỒI -->
+                    <Border Background="White" CornerRadius="12" Padding="20" BorderBrush="#E1EAF2" BorderThickness="1">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="3. CHỌN GHẾ NGỒI" FontSize="15" FontWeight="Bold" Foreground="#15324B" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Content="💺 Mở sơ đồ chọn ghế đầy đủ" Style="{StaticResource ActionButton}" 
+                                        Click="BtnOpenSeatSelection_Click"/>
+                            </Grid>
+
+                            <!-- DANH SÁCH GHẾ ĐÃ CHỌN -->
+                            <TextBlock Text="Các ghế đang chọn:" FontWeight="SemiBold" Foreground="#63778A" Margin="0,0,0,6"/>
+                            <Border Background="#F7FAFC" CornerRadius="8" Padding="14" BorderBrush="#E2E8F0" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock x:Name="SelectedSeatsSummaryText" Text="Chưa chọn ghế nào" FontWeight="Bold" Foreground="#F58220" FontSize="16"/>
+                                    <TextBlock x:Name="SelectedSeatsCountText" Text="Số lượng: 0 ghế" Foreground="#63778A" FontSize="12" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- GHẾ TRỐNG NHANH CỦA SUẤT CHIẾU -->
+                            <TextBlock Text="Chọn ghế nhanh bên dưới (Click để chọn/bỏ chọn):" Foreground="#63778A" FontSize="12" Margin="0,14,0,8"/>
+                            <ScrollViewer MaxHeight="200" VerticalScrollBarVisibility="Auto">
+                                <WrapPanel x:Name="QuickSeatsWrapPanel" Orientation="Horizontal"/>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- CỘT PHẢI: THÔNG TIN KHÁCH & THANH TOÁN -->
+                <StackPanel Grid.Column="1">
+                    <!-- BƯỚC 4: THÔNG TIN KHÁCH HÀNG & KHUYẾN MÃI -->
+                    <Border Background="White" CornerRadius="12" Padding="20" BorderBrush="#E1EAF2" BorderThickness="1" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="4. THÔNG TIN KHÁCH HÀNG" FontSize="15" FontWeight="Bold" Foreground="#15324B" Margin="0,0,0,12"/>
+
+                            <CheckBox x:Name="WalkInCustomerCheckBox" Content="Khách vãng lai (không đăng ký tài khoản)" 
+                                      FontWeight="SemiBold" Margin="0,0,0,12" Checked="WalkInCustomerCheckBox_CheckedChanged" Unchecked="WalkInCustomerCheckBox_CheckedChanged"/>
+
+                            <StackPanel x:Name="CustomerInfoPanel" Visibility="Collapsed" Margin="0,0,0,12">
+                                <TextBlock Text="Số điện thoại / Email thành viên:" FontSize="12" Foreground="#63778A" Margin="0,0,0,4"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="CustomerLookupBox" Height="36" VerticalContentAlignment="Center" Padding="8,0"/>
+                                    <Button Grid.Column="1" Content="Tìm" Style="{StaticResource ActionButton}" Margin="6,0,0,0" Padding="12,6" Click="BtnLookupCustomer_Click"/>
+                                </Grid>
+                                <TextBlock x:Name="CustomerFoundText" Text="" Foreground="#2E7D32" FontWeight="SemiBold" FontSize="12" Margin="0,4,0,0"/>
+                            </StackPanel>
+
+                            <TextBlock Text="Mã khuyến mãi (nếu có):" FontSize="12" Foreground="#63778A" Margin="0,0,0,4"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="PromoCodeBox" Height="36" VerticalContentAlignment="Center" Padding="8,0"/>
+                                <Button Grid.Column="1" Content="Áp dụng" Style="{StaticResource ActionButton}" Margin="6,0,0,0" Padding="12,6" Click="BtnApplyPromo_Click"/>
+                            </Grid>
+                            <TextBlock x:Name="PromoStatusText" Text="" Foreground="#2E7D32" FontWeight="SemiBold" FontSize="12" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- BƯỚC 5: TÍNH TIỀN & XÁC NHẬN -->
+                    <Border Background="White" CornerRadius="12" Padding="20" BorderBrush="#E1EAF2" BorderThickness="1">
+                        <StackPanel>
+                            <TextBlock Text="5. THANH TOÁN TẠI QUẦY" FontSize="15" FontWeight="Bold" Foreground="#15324B" Margin="0,0,0,14"/>
+
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Tổng tiền vé:" Foreground="#63778A"/>
+                                <TextBlock x:Name="SubTotalText" Grid.Column="1" Text="0 đ" FontWeight="SemiBold" Foreground="#15324B"/>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Giảm giá khuyến mãi:" Foreground="#63778A"/>
+                                <TextBlock x:Name="DiscountText" Grid.Column="1" Text="0 đ" FontWeight="SemiBold" Foreground="#D32F2F"/>
+                            </Grid>
+
+                            <Border Height="1" Background="#EDF2F7" Margin="0,6,0,10"/>
+
+                            <Grid Margin="0,0,0,16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="TỔNG PHẢI THU:" FontWeight="ExtraBold" FontSize="15" Foreground="#15324B" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="FinalTotalText" Grid.Column="1" Text="0 đ" FontWeight="ExtraBold" FontSize="20" Foreground="#F58220"/>
+                            </Grid>
+
+                            <TextBlock Text="Phương thức thanh toán:" FontSize="12" Foreground="#63778A" Margin="0,0,0,4"/>
+                            <ComboBox x:Name="PaymentMethodComboBox" Height="36" VerticalContentAlignment="Center" Margin="0,0,0,12">
+                                <ComboBoxItem Content="💵 Tiền mặt" IsSelected="True"/>
+                                <ComboBoxItem Content="💳 Thẻ ngân hàng / POS"/>
+                                <ComboBoxItem Content="📱 Chuyển khoản QR"/>
+                            </ComboBox>
+
+                            <TextBlock Text="Tiền khách đưa:" FontSize="12" Foreground="#63778A" Margin="0,0,0,4"/>
+                            <TextBox x:Name="CashGivenBox" Height="36" VerticalContentAlignment="Center" Padding="8,0" Margin="0,0,0,6" TextChanged="CashGivenBox_TextChanged"/>
+                            <TextBlock x:Name="ChangeReturnText" Text="Tiền thừa trả khách: 0 đ" Foreground="#2E7D32" FontWeight="Bold" Margin="0,0,0,18"/>
+
+                            <Button x:Name="BtnConfirmSell" Content="✅ XÁC NHẬN BÁN VÉ &amp; IN VÉ" 
+                                    Style="{StaticResource OrangeButton}" Height="46" FontSize="15" 
+                                    Click="BtnConfirmSell_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,246 @@
+﻿<UserControl x:Class="PhenikaaCinema.Views.Admin.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:graphics="clr-namespace:PhenikaaCinema.Views.Graphics"
+             mc:Ignorable="d"
+             d:DesignHeight="950" d:DesignWidth="1150"
+             Background="{StaticResource BgMain}"
+             FontFamily="Segoe UI">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="32">
+
+            <!-- HEADER BANNER & TOP CONTROLS -->
+            <Border Background="White" CornerRadius="16" Padding="28,24" Margin="0,0,0,24" 
+                    BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                    Effect="{StaticResource CardShadow}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center">
+                        <Border Background="{StaticResource LightBlue}" CornerRadius="6" HorizontalAlignment="Left" Padding="10,4" Margin="0,0,0,10">
+                            <TextBlock Text="HỆ THỐNG TRỰC QUAN HÓA 2D &amp; 3D" Foreground="{StaticResource PrimaryBlue}" FontSize="11" FontWeight="Bold"/>
+                        </Border>
+                        <TextBlock Text="BẢNG ĐIỀU KHIỂN QUẢN TRỊ" FontSize="26" FontWeight="ExtraBold" Foreground="{StaticResource TextMain}"/>
+                        <TextBlock Text="Theo dõi doanh thu, hiệu suất phòng chiếu và số liệu kinh doanh theo thời gian thực." 
+                                   Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,6,0,18"/>
+                        <WrapPanel>
+                            <Button Content="📊  Báo cáo doanh thu chi tiết" Style="{StaticResource PrimaryButton}" Click="BtnViewReports_Click" Margin="0,0,12,0"/>
+                            <Button Content="🔄  Làm mới dữ liệu" Style="{StaticResource SecondaryButton}" Click="BtnRefresh_Click"/>
+                        </WrapPanel>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="80" Height="80" CornerRadius="40" Background="{StaticResource LightOrange}" VerticalAlignment="Center" Margin="20,0,0,0">
+                        <TextBlock Text="🎬" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- 4 SUMMARY CARDS -->
+            <TextBlock Text="CHỈ SỐ TỔNG QUAN HÔM NAY &amp; THÁNG NÀY" Foreground="{StaticResource TextSecondary}" FontWeight="Bold" FontSize="12" Margin="4,0,0,12"/>
+            <UniformGrid Columns="4" Margin="0,0,0,24">
+                <!-- Card 1: Doanh thu hom nay -->
+                <Border Background="White" CornerRadius="14" Padding="20" Margin="0,0,12,0" 
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                        Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <TextBlock Text="DOANH THU HÔM NAY" Foreground="{StaticResource TextSecondary}" FontSize="11" FontWeight="Bold"/>
+                            <TextBlock Text="💰" FontSize="16" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <TextBlock x:Name="RevenueTodayText" Text="0 đ" FontSize="22" FontWeight="ExtraBold" Foreground="{StaticResource PrimaryBlue}"/>
+                        <TextBlock x:Name="RevenueTodaySubText" Text="Đang tải..." Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 2: Ve ban thang nay -->
+                <Border Background="White" CornerRadius="14" Padding="20" Margin="0,0,12,0" 
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                        Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <TextBlock Text="VÉ BÁN THÁNG NÀY" Foreground="{StaticResource TextSecondary}" FontSize="11" FontWeight="Bold"/>
+                            <TextBlock Text="🎟" FontSize="16" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <TextBlock x:Name="TicketsMonthText" Text="0" FontSize="22" FontWeight="ExtraBold" Foreground="{StaticResource Success}"/>
+                        <TextBlock x:Name="TicketsMonthSubText" Text="Cả tháng này" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 3: Don dat ve cho -->
+                <Border Background="White" CornerRadius="14" Padding="20" Margin="0,0,12,0" 
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                        Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <TextBlock Text="ĐƠN ĐẶT CHỜ TT" Foreground="{StaticResource TextSecondary}" FontSize="11" FontWeight="Bold"/>
+                            <TextBlock Text="⏳" FontSize="16" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <TextBlock x:Name="PendingBookingsText" Text="0" FontSize="22" FontWeight="ExtraBold" Foreground="{StaticResource AccentOrange}"/>
+                        <TextBlock Text="Đang chờ thanh toán" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 4: Phim dang chieu -->
+                <Border Background="White" CornerRadius="14" Padding="20" 
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                        Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <TextBlock Text="PHIM ĐANG CHIẾU" Foreground="{StaticResource TextSecondary}" FontSize="11" FontWeight="Bold"/>
+                            <TextBlock Text="📽" FontSize="16" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <TextBlock x:Name="NowShowingCountText" Text="0" FontSize="22" FontWeight="ExtraBold" Foreground="{StaticResource DarkBlue}"/>
+                        <TextBlock Text="Bộ phim trên lịch" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <!-- 2D GRAPHICS CHARTS SECTION -->
+            <TextBlock Text="TRỰC QUAN HÓA BIỂU ĐỒ DOANH THU &amp; CÔNG SUẤT (2D)" Foreground="{StaticResource TextSecondary}" FontWeight="Bold" FontSize="12" Margin="4,0,0,12"/>
+            <Border Background="White" CornerRadius="16" Padding="20" Margin="0,0,0,24"
+                    BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                    Effect="{StaticResource CardShadow}">
+                <graphics:Cinema2DChartsControl x:Name="ChartsControl2D" Height="360"/>
+            </Border>
+
+            <!-- MONTH PERFORMANCE + 3D MINI ROOM WIDGET -->
+            <Grid Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Month Summary Stats Card -->
+                <Border Grid.Column="0" Background="White" CornerRadius="16" Padding="24" Margin="0,0,16,0" 
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                        Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <TextBlock Text="HIỆU QUẢ KINH DOANH THÁNG NÀY" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextMain}"/>
+                        <TextBlock Text="Tổng hợp các chỉ số bán vé và phim trong tháng hiện tại" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,4,0,18"/>
+
+                        <UniformGrid Columns="2" Rows="2">
+                            <Border Background="{StaticResource BgMain}" CornerRadius="10" Padding="16" Margin="0,0,10,10">
+                                <StackPanel>
+                                    <TextBlock Text="Tổng doanh thu tháng" Foreground="{StaticResource TextSecondary}" FontSize="11"/>
+                                    <TextBlock x:Name="MonthRevenueText" Text="0 đ" FontSize="18" FontWeight="ExtraBold" Foreground="{StaticResource PrimaryBlue}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="{StaticResource BgMain}" CornerRadius="10" Padding="16" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <TextBlock Text="Số vé đã thanh toán" Foreground="{StaticResource TextSecondary}" FontSize="11"/>
+                                    <TextBlock x:Name="MonthTicketsText" Text="0 vé" FontSize="18" FontWeight="ExtraBold" Foreground="{StaticResource Success}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="{StaticResource BgMain}" CornerRadius="10" Padding="16" Margin="0,0,10,0">
+                                <StackPanel>
+                                    <TextBlock Text="Số đơn đặt vé xác nhận" Foreground="{StaticResource TextSecondary}" FontSize="11"/>
+                                    <TextBlock x:Name="MonthConfirmedText" Text="0 đơn" FontSize="18" FontWeight="ExtraBold" Foreground="{StaticResource AccentOrange}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Background="{StaticResource BgMain}" CornerRadius="10" Padding="16">
+                                <StackPanel>
+                                    <TextBlock Text="Số phim được chiếu" Foreground="{StaticResource TextSecondary}" FontSize="11"/>
+                                    <TextBlock x:Name="MonthMoviesText" Text="0 phim" FontSize="18" FontWeight="ExtraBold" Foreground="{StaticResource DarkBlue}" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 3D Mini Room Widget -->
+                <Border Grid.Column="1" Background="White" CornerRadius="16" Padding="0" 
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1" 
+                        ClipToBounds="True" Effect="{StaticResource CardShadow}">
+                    <graphics:MiniCinemaRoom3DWidget Height="230"/>
+                </Border>
+            </Grid>
+
+            <!-- TOP MOVIES REVENUE TABLE -->
+            <TextBlock Text="TOP PHIM DOANH THU CAO NHẤT" Foreground="{StaticResource TextSecondary}" FontWeight="Bold" FontSize="12" Margin="4,0,0,12"/>
+            <Border Background="White" CornerRadius="16" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" 
+                    ClipToBounds="True" Margin="0,0,0,24" Effect="{StaticResource CardShadow}">
+                <DataGrid x:Name="TopMoviesDataGrid"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                          MaxHeight="260"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="#F1F5F9"
+                          BorderThickness="0"
+                          Background="White"
+                          RowBackground="White"
+                          AlternatingRowBackground="#FAFBFD"
+                          FontSize="13"
+                          RowHeight="42">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridColumnHeaderStyle}"/>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="TÊN PHIM" Binding="{Binding Title}" Width="*" FontWeight="SemiBold"/>
+                        <DataGridTextColumn Header="SỐ VÉ ĐÃ BÁN" Binding="{Binding TicketsSold}" Width="160"/>
+                        <DataGridTextColumn Header="TỔNG DOANH THU" Binding="{Binding FormattedRevenue}" Width="180">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Foreground" Value="{StaticResource PrimaryBlue}"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <!-- TRUY CẬP NHANH CHỨC NĂNG -->
+            <TextBlock Text="TRUY CẬP NHANH QUẢN LÝ" Foreground="{StaticResource TextSecondary}" FontWeight="Bold" FontSize="12" Margin="4,0,0,12"/>
+            <UniformGrid Columns="3">
+                <Border Background="White" CornerRadius="14" Padding="20" Margin="0,0,14,0" 
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1" 
+                        Cursor="Hand" MouseLeftButtonDown="QuickAccessMovies_Click"
+                        Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <Border Width="46" Height="46" CornerRadius="23" Background="{StaticResource LightBlue}" HorizontalAlignment="Left">
+                            <TextBlock Text="🎬" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Quản lý phim" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextMain}" Margin="0,12,0,4"/>
+                        <TextBlock Text="Thêm, sửa, cập nhật danh mục phim chiếu rạp và thể loại" Foreground="{StaticResource TextSecondary}" FontSize="12" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="White" CornerRadius="14" Padding="20" Margin="0,0,14,0" 
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1" 
+                        Cursor="Hand" MouseLeftButtonDown="QuickAccessShowtimes_Click"
+                        Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <Border Width="46" Height="46" CornerRadius="23" Background="{StaticResource LightOrange}" HorizontalAlignment="Left">
+                            <TextBlock Text="🕒" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Lịch chiếu" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextMain}" Margin="0,12,0,4"/>
+                        <TextBlock Text="Sắp xếp và quản lý khung giờ chiếu phim theo từng phòng" Foreground="{StaticResource TextSecondary}" FontSize="12" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="White" CornerRadius="14" Padding="20" 
+                        BorderBrush="{StaticResource BorderColor}" BorderThickness="1" 
+                        Cursor="Hand" MouseLeftButtonDown="QuickAccessBookings_Click"
+                        Effect="{StaticResource CardShadow}">
+                    <StackPanel>
+                        <Border Width="46" Height="46" CornerRadius="23" Background="#DCFCE7" HorizontalAlignment="Left">
+                            <TextBlock Text="🎟" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Đặt vé &amp; Đơn hàng" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextMain}" Margin="0,12,0,4"/>
+                        <TextBlock Text="Tra cứu và xử lý các đơn đặt vé, xuất vé điện tử" Foreground="{StaticResource TextSecondary}" FontSize="12" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

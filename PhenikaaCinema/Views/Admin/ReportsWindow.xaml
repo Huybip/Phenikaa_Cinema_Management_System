@@ -1,0 +1,270 @@
+﻿ <Window x:Class="PhenikaaCinema.Views.Admin.ReportsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Báo cáo thống kê - PHENIKAA CINEMA"
+        Height="1025" Width="1200"
+        MinHeight="650" MinWidth="900"
+        WindowStartupLocation="CenterOwner"
+        Background="#FFF8F5F0"
+        Foreground="#263238">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="OrangeBrush" Color="#F58220"/>
+        <SolidColorBrush x:Key="BlueBrush" Color="#2471A3"/>
+
+        <Style x:Key="ReportButton" TargetType="Button">
+            <Setter Property="Background" Value="#2471A3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#F58220"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Height" Value="38"/>
+        </Style>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#263238"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#DCECF7"/>
+                    <Setter Property="Foreground" Value="#174A6E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="22">
+
+            <!-- Tiêu đề -->
+            <Border Background="White"
+                    BorderBrush="#E0E5EA"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="20"
+                    Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="BÁO CÁO THỐNG KÊ"
+                               FontSize="26"
+                               FontWeight="Bold"
+                               Foreground="#263238"/>
+                    <TextBlock Text="Dashboard doanh thu và hoạt động bán vé"
+                               FontSize="13"
+                               Foreground="#718096"
+                               Margin="0,6,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Bộ lọc -->
+            <Border Background="White"
+                    BorderBrush="#E0E5EA"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="12"
+                    Margin="0,0,0,16">
+                <WrapPanel VerticalAlignment="Center">
+                    <TextBlock Text="Từ ngày"
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               Margin="6"/>
+
+                    <DatePicker x:Name="StartDatePicker"
+                                Width="150"
+                                Height="32"
+                                Margin="4"/>
+
+                    <TextBlock Text="Đến ngày"
+                               VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               Margin="6"/>
+
+                    <DatePicker x:Name="EndDatePicker"
+                                Width="150"
+                                Height="32"
+                                Margin="4"/>
+
+                    <Button Content="Xem báo cáo"
+                            Click="LoadReportButton_Click"
+                            Style="{StaticResource ReportButton}"/>
+
+                    <Button Content="Xuất CSV"
+                            Click="ExportCsvButton_Click"
+                            Background="#F58220"
+                            Style="{StaticResource ReportButton}"/>
+                </WrapPanel>
+            </Border>
+
+            <!-- Thẻ tổng quan -->
+            <UniformGrid Columns="3" Margin="0,0,0,16">
+
+                <Border Background="White"
+                        BorderBrush="#E0E5EA"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Padding="18"
+                        Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="TỔNG DOANH THU"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   Foreground="#718096"/>
+                        <TextBlock x:Name="RevenueTextBlock"
+                                   Text="0 đ"
+                                   FontSize="25"
+                                   FontWeight="Bold"
+                                   Foreground="#F58220"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="White"
+                        BorderBrush="#E0E5EA"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Padding="18"
+                        Margin="4,0">
+                    <StackPanel>
+                        <TextBlock Text="ĐƠN ĐẶT VÉ ĐÃ XÁC NHẬN"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   Foreground="#718096"/>
+                        <TextBlock x:Name="BookingsTextBlock"
+                                   Text="0"
+                                   FontSize="25"
+                                   FontWeight="Bold"
+                                   Foreground="#2471A3"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="White"
+                        BorderBrush="#E0E5EA"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Padding="18"
+                        Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="VÉ ĐÃ PHÁT HÀNH"
+                                   FontSize="12"
+                                   FontWeight="Bold"
+                                   Foreground="#718096"/>
+                        <TextBlock x:Name="TicketsTextBlock"
+                                   Text="0"
+                                   FontSize="25"
+                                   FontWeight="Bold"
+                                   Foreground="#2471A3"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Border>
+
+            </UniformGrid>
+
+            <!-- Hai biểu đồ -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Biểu đồ doanh thu -->
+                <Border Grid.Column="0"
+                        Background="White"
+                        BorderBrush="#E0E5EA"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Padding="16"
+                        Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="DOANH THU THEO NGÀY"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#263238"/>
+
+                        <TextBlock Text="Đơn vị: VNĐ"
+                                   FontSize="11"
+                                   Foreground="#718096"
+                                   Margin="0,4,0,8"/>
+
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                      VerticalScrollBarVisibility="Disabled">
+                            <Canvas x:Name="RevenueChartCanvas"
+                                    Height="260"
+                                    Width="650"
+                                    Background="White"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Border>
+
+                <!-- Biểu đồ trạng thái đơn -->
+                <Border Grid.Column="1"
+                        Background="White"
+                        BorderBrush="#E0E5EA"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Padding="16"
+                        Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="TRẠNG THÁI ĐẶT VÉ"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#263238"/>
+
+                        <TextBlock Text="Số đơn theo trạng thái"
+                                   FontSize="11"
+                                   Foreground="#718096"
+                                   Margin="0,4,0,8"/>
+
+                        <Canvas x:Name="BookingStatusChartCanvas"
+                                Height="260"
+                                Background="White"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Bảng chi tiết -->
+            <Border Background="White"
+                    BorderBrush="#E0E5EA"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="10"
+                    Margin="0,0,0,12">
+                <StackPanel>
+                    <TextBlock Text="CHI TIẾT THANH TOÁN"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Margin="4,4,4,12"/>
+
+                    <DataGrid x:Name="ReportGrid"
+                              AutoGenerateColumns="True"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              MinHeight="200"
+                              MaxHeight="400"
+                              Background="White"
+                              Foreground="#263238"
+                              RowBackground="White"
+                              AlternatingRowBackground="#FFF8F5F0"
+                              GridLinesVisibility="Horizontal"
+                              BorderThickness="0"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="Doanh thu được tính từ các khoản thanh toán thành công trong khoảng ngày đã chọn."
+                       Foreground="#718096"
+                       FontSize="12"
+                       Margin="4,0,0,8"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</Window>

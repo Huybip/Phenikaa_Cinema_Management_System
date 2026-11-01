@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="PhenikaaCinema.Views.Graphics.Cinema2DChartsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="360" d:DesignWidth="1000"
+             Background="Transparent"
+             FontFamily="Segoe UI">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- CHART 1: BIỂU ĐỒ ĐƯỜNG & VÙNG DOANH THU 7 NGÀY GẦN NHẤT -->
+        <Border Grid.Column="0" Background="White" CornerRadius="14" Padding="20" Margin="0,0,16,0"
+                BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="0,0,0,14">
+                    <TextBlock Text="📈  XU HƯỚNG DOANH THU (7 NGÀY GẦN NHẤT)" Foreground="{StaticResource TextMain}" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="Biểu đồ 2D đường &amp; vùng gradient theo dữ liệu giao dịch thực tế" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,3,0,0"/>
+                </StackPanel>
+
+                <!-- 2D Canvas chart -->
+                <Canvas x:Name="RevenueChartCanvas" Grid.Row="1" ClipToBounds="True" SizeChanged="RevenueChartCanvas_SizeChanged">
+                    <!-- Dynamic Grid lines, Geometry curves and Dots -->
+                </Canvas>
+
+                <!-- Chart Legend / Summary below -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    <Rectangle Width="12" Height="12" RadiusX="3" RadiusY="3" Fill="{StaticResource PrimaryBlue}" Margin="0,0,6,0"/>
+                    <TextBlock Text="Doanh thu (VND)" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,0,18,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="PeakRevenueText" Text="Cao nhất: 0 đ" Foreground="{StaticResource PrimaryBlue}" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- CHART 2: BIỂU ĐỒ CỘT 2D TỶ LỆ LẤP ĐẦY PHÒNG CHIẾU -->
+        <Border Grid.Column="1" Background="White" CornerRadius="14" Padding="20"
+                BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="0,0,0,14">
+                    <TextBlock Text="📊  TỶ LỆ GHẾ ĐÃ ĐẶT THEO PHÒNG" Foreground="{StaticResource TextMain}" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="Đo lường công suất sử dụng phòng chiếu thực tế" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,3,0,0"/>
+                </StackPanel>
+
+                <!-- Bar chart list container -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" BorderThickness="0">
+                    <StackPanel x:Name="RoomOccupancyBarsPanel">
+                        <!-- Dynamic 2D progress/bar shapes -->
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,163 @@
+﻿<UserControl x:Class="PhenikaaCinema.Views.Customer.MyBookingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1100"
+             Background="{StaticResource BgMain}"
+             FontFamily="Segoe UI">
+
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER BANNER -->
+        <Border Grid.Row="0" Background="White" CornerRadius="14" Padding="24,18" Margin="0,0,0,18"
+                BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="LỊCH SỬ ĐẶT VÉ CỦA TÔI" FontSize="22" FontWeight="ExtraBold" Foreground="{StaticResource PrimaryBlue}"/>
+                    <TextBlock Text="Theo dõi trạng thái các đơn đặt vé, thanh toán trực tuyến hoặc xem lại mã vé điện tử" 
+                               Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
+                </StackPanel>
+                <Button Grid.Column="1" Content="🔄  Làm mới dữ liệu" 
+                        Style="{StaticResource SecondaryButton}" 
+                        Height="38" 
+                        Click="BtnRefresh_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- SEARCH & FILTER TOOLBAR -->
+        <Border Grid.Row="1" Background="White" CornerRadius="12" Padding="18,14" Margin="0,0,0,18"
+                BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                Effect="{StaticResource CardShadow}">
+            <WrapPanel VerticalAlignment="Center">
+                <!-- Search Box -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,24,0" VerticalAlignment="Center">
+                    <TextBlock Text="🔍  Tìm kiếm:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{StaticResource TextSecondary}" Margin="0,0,8,0"/>
+                    <TextBox x:Name="SearchBox" Width="240" Style="{StaticResource InputBox}" Height="36"
+                             TextChanged="SearchBox_TextChanged"/>
+                </StackPanel>
+
+                <!-- Status Filter Combo -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,24,0" VerticalAlignment="Center">
+                    <TextBlock Text="Trạng thái:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{StaticResource TextSecondary}" Margin="0,0,8,0"/>
+                    <ComboBox x:Name="StatusFilterComboBox" Width="200" Height="36" VerticalContentAlignment="Center" 
+                              SelectionChanged="StatusFilterComboBox_SelectionChanged">
+                        <ComboBoxItem Content="Tất cả trạng thái" IsSelected="True"/>
+                        <ComboBoxItem Content="Đã xác nhận (Confirmed)"/>
+                        <ComboBoxItem Content="Chờ thanh toán (Pending)"/>
+                        <ComboBoxItem Content="Đã hủy (Cancelled)"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Summary count text -->
+                <TextBlock x:Name="SummaryCountText" Text="Đang tải danh sách..." 
+                           VerticalAlignment="Center" Foreground="{StaticResource PrimaryBlue}" 
+                           FontWeight="SemiBold" Margin="8,0,0,0"/>
+            </WrapPanel>
+        </Border>
+
+        <!-- DATAGRID IN WHITE CARD -->
+        <Border Grid.Row="2" Background="White" CornerRadius="14" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" 
+                ClipToBounds="True" Effect="{StaticResource CardShadow}">
+            <Grid>
+                <DataGrid x:Name="BookingsDataGrid" 
+                          AutoGenerateColumns="False" 
+                          CanUserAddRows="False" 
+                          IsReadOnly="True" 
+                          SelectionMode="Single"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="#F1F5F9"
+                          BorderThickness="0"
+                          Background="White"
+                          RowBackground="White"
+                          AlternatingRowBackground="#FAFBFD"
+                          FontSize="13"
+                          RowHeight="44"
+                          SelectionChanged="BookingsDataGrid_SelectionChanged">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridColumnHeaderStyle}"/>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="MÃ ĐƠN" Binding="{Binding BookingCode}" Width="140" FontWeight="Bold"/>
+                        <DataGridTextColumn Header="TÊN PHIM" Binding="{Binding MovieTitle}" Width="*" FontWeight="SemiBold"/>
+                        <DataGridTextColumn Header="PHÒNG" Binding="{Binding RoomName}" Width="110"/>
+                        <DataGridTextColumn Header="SUẤT CHIẾU" Binding="{Binding StartTimeVn, StringFormat='dd/MM/yyyy HH:mm'}" Width="150"/>
+                        <DataGridTextColumn Header="GHẾ" Binding="{Binding SeatNames}" Width="110"/>
+                        <DataGridTextColumn Header="TỔNG TIỀN" Binding="{Binding FormattedTotal}" Width="130">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Foreground" Value="{StaticResource PrimaryBlue}"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="TRẠNG THÁI" Binding="{Binding Status}" Width="130">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="NGÀY ĐẶT" Binding="{Binding BookingTimeVn, StringFormat='dd/MM/yyyy HH:mm'}" Width="140"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock x:Name="EmptyMessageText" 
+                           Text="Bạn chưa có đơn đặt vé nào phù hợp." 
+                           Foreground="{StaticResource TextSecondary}" FontSize="15" 
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+            </Grid>
+        </Border>
+
+        <!-- BOTTOM ACTION TOOLBAR -->
+        <Border Grid.Row="3" Background="White" CornerRadius="14" Padding="20,16" Margin="0,18,0,0" 
+                BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                Effect="{StaticResource CardShadow}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Đơn đang chọn: " Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" FontSize="13"/>
+                    <TextBlock x:Name="SelectedBookingInfoText" Text="(Chưa chọn đơn nào)" FontWeight="Bold" Foreground="{StaticResource TextMain}" VerticalAlignment="Center" Margin="6,0,0,0" FontSize="13"/>
+                </StackPanel>
+
+                <WrapPanel Grid.Column="1" VerticalAlignment="Center">
+                    <Button x:Name="BtnViewTickets" Content="🎟  Xem vé điện tử" 
+                            Style="{StaticResource AccentButton}" 
+                            Height="38"
+                            Click="BtnViewTickets_Click" 
+                            Margin="0,0,10,0" 
+                            IsEnabled="False"/>
+                    <Button x:Name="BtnPayNow" Content="💳  Thanh toán ngay" 
+                            Style="{StaticResource SuccessButton}" 
+                            Height="38"
+                            Click="BtnPayNow_Click" 
+                            Margin="0,0,10,0" 
+                            IsEnabled="False"/>
+                    <Button x:Name="BtnCancelBooking" Content="✖  Hủy đơn" 
+                            Style="{StaticResource DangerButton}" 
+                            Height="38"
+                            Click="BtnCancelBooking_Click" 
+                            IsEnabled="False"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

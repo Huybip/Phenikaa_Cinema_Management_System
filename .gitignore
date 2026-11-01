@@ -1,0 +1,100 @@
+## =====================================================================
+## Visual Studio / .NET Framework / WPF .gitignore
+## Project: PhenikaaCinema
+## =====================================================================
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docview
+*.userprefs
+*.DotSettings.user
+
+# Build results & Binaries
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio temporary files, caches, and metadata
+.vs/
+.vscode/
+*.cachefile
+*.opendb
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.VC.opendb
+
+# MSBuild & Auto-generated files
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.visualstate.xml
+Generated\ Files/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# NuGet Packages
+# Exclude the large packages folder from git; NuGet restore will download them automatically
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+*.nupkg
+*.snupkg
+
+# Database & Local LocalDB / MDF / LDF files
+# (Avoid pushing large local database instance files or locked files)
+*.mdf
+*.ldf
+*.ndf
+*.db
+*.sqlite
+*.sqlite3
+
+# Sensitive Application Configuration (Contains DB Passwords / Connection Strings)
+[Aa]pp.config
+**/[Aa]pp.config
+appsettings*.json
+secrets.json
+connectionstrings.json
+
+# Windows OS temporary & system files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.stackdump
+
+# Crash and diagnostic logs
+crash.*.log
+*.crash
+*.dmp
+
+# Publish and Deployment
+**/publish/
+**/PublishProfiles/
+*.pubxml
+*.pubxml.user
+
+# JetBrains Rider / ReSharper / Rider
+.idea/
+*.sln.iml
+

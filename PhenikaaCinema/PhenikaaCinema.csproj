@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.2\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.2\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9A6F562C-1E12-4B24-9DCC-0F9AF607CD60}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PhenikaaCinema</RootNamespace>
+    <AssemblyName>PhenikaaCinema</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BCrypt-Net-Next, Version=4.2.0.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.2.0\lib\net472\BCrypt-Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.6.3\lib\net462\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.6.1\lib\net462\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+</ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\CinemaStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Data\Db.cs" />
+    <Compile Include="Views\Admin\BookingManagementWindow.xaml.cs">
+      <DependentUpon>BookingManagementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\GenreManagementWindow.xaml.cs">
+      <DependentUpon>GenreManagementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\MovieManagementWindow.xaml.cs">
+      <DependentUpon>MovieManagementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\PasswordDialog.xaml.cs">
+      <DependentUpon>PasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\PromotionManagementWindow.xaml.cs">
+      <DependentUpon>PromotionManagementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\ReportsWindow.xaml.cs">
+      <DependentUpon>ReportsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RegisterWindow.xaml.cs">
+      <DependentUpon>RegisterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\RoomManagementWindow.xaml.cs">
+      <DependentUpon>RoomManagementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\EntityFrameworkTestService.cs" />
+    <Compile Include="Services\RegistrationService.cs" />
+    <Compile Include="Views\Admin\ShowtimeManagementWindow.xaml.cs">
+      <DependentUpon>ShowtimeManagementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\UserManagementWindow.xaml.cs">
+      <DependentUpon>UserManagementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowNavigation.cs" />
+    <Compile Include="SessionManager.cs" />
+    <Compile Include="DateTimeHelper.cs" />
+    <Compile Include="CurrencyHelper.cs" />
+    <Compile Include="ValidationHelper.cs" />
+    <Compile Include="Services\MovieService.cs" />
+    <Compile Include="Services\GenreService.cs" />
+    <Compile Include="Services\ShowtimeService.cs" />
+    <Compile Include="Services\RoomService.cs" />
+    <Compile Include="Services\SeatService.cs" />
+    <Compile Include="Services\BookingService.cs" />
+    <Compile Include="Services\PaymentService.cs" />
+    <Compile Include="Services\TicketService.cs" />
+    <Compile Include="Services\PromotionService.cs" />
+    <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Views\Booking\MovieSelectionWindow.xaml.cs">
+      <DependentUpon>MovieSelectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Booking\ShowtimeSelectionWindow.xaml.cs">
+      <DependentUpon>ShowtimeSelectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Booking\SeatSelectionWindow.xaml.cs">
+      <DependentUpon>SeatSelectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Booking\BookingConfirmationWindow.xaml.cs">
+      <DependentUpon>BookingConfirmationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Booking\MockPaymentWindow.xaml.cs">
+      <DependentUpon>MockPaymentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Booking\TicketDetailWindow.xaml.cs">
+      <DependentUpon>TicketDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Booking\BookingHistoryWindow.xaml.cs">
+      <DependentUpon>BookingHistoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\Booking\MovieSelectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Booking\ShowtimeSelectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Booking\SeatSelectionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Booking\BookingConfirmationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Booking\MockPaymentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Booking\TicketDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Booking\BookingHistoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\AdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\DashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\RevenueReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\BookingManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\PromotionManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\ReportsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Customer\CustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Customer\CustomerHomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Customer\MyBookingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Customer\MyTicketsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Customer\CustomerProfileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employee\EmployeeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employee\SellTicketView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employee\BookingLookupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employee\TicketLookupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\Admin\AdminWindow.xaml.cs">
+      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\DashboardView.xaml.cs">
+      <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\RevenueReportView.xaml.cs">
+      <DependentUpon>RevenueReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AuthService.cs" />
+    <Compile Include="Views\Customer\CustomerWindow.xaml.cs">
+      <DependentUpon>CustomerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CustomerHomeView.xaml.cs">
+      <DependentUpon>CustomerHomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\MyBookingsView.xaml.cs">
+      <DependentUpon>MyBookingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\MyTicketsView.xaml.cs">
+      <DependentUpon>MyTicketsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CustomerProfileView.xaml.cs">
+      <DependentUpon>CustomerProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseHelper.cs" />
+    <Compile Include="Data\CinemaContext.cs" />
+    <Compile Include="Views\Employee\EmployeeWindow.xaml.cs">
+      <DependentUpon>EmployeeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\SellTicketView.xaml.cs">
+      <DependentUpon>SellTicketView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\BookingLookupView.xaml.cs">
+      <DependentUpon>BookingLookupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\TicketLookupView.xaml.cs">
+      <DependentUpon>TicketLookupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\Admin\GenreManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\MovieManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\PasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RegisterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\RoomManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\ShowtimeManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\UserManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Graphics\SeatMap2DControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Graphics\CinemaRoom3DView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Graphics\MoviePoster3DControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Graphics\Cinema2DChartsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Graphics\MiniCinemaRoom3DWidget.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\Graphics\SeatMap2DControl.xaml.cs">
+      <DependentUpon>SeatMap2DControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Graphics\CinemaRoom3DView.xaml.cs">
+      <DependentUpon>CinemaRoom3DView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Graphics\MoviePoster3DControl.xaml.cs">
+      <DependentUpon>MoviePoster3DControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Graphics\Cinema2DChartsControl.xaml.cs">
+      <DependentUpon>Cinema2DChartsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Graphics\MiniCinemaRoom3DWidget.xaml.cs">
+      <DependentUpon>MiniCinemaRoom3DWidget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\StatisticsService.cs" />
+</ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\BookingPromotion.cs" />
+    <Compile Include="Models\BookingSeat.cs" />
+    <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\MovieGenre.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\Promotion.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Room.cs" />
+    <Compile Include="Models\Seat.cs" />
+    <Compile Include="Models\Showtime.cs" />
+    <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="PasswordHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+</ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+</ItemGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.2\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.2\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.2\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.2\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.2\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.2\build\EntityFramework.targets')" />
+</Project>

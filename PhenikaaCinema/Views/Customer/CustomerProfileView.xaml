@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="PhenikaaCinema.Views.Customer.CustomerProfileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="780" d:DesignWidth="1100"
+             Background="{StaticResource BgMain}"
+             FontFamily="Segoe UI">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="28">
+
+            <!-- HEADER BANNER -->
+            <Border Background="White" CornerRadius="14" Padding="24,18" Margin="0,0,0,20" 
+                    BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                    Effect="{StaticResource CardShadow}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="HỒ SƠ KHÁCH HÀNG" FontSize="22" FontWeight="ExtraBold" Foreground="{StaticResource PrimaryBlue}"/>
+                        <TextBlock Text="Quản lý thông tin tài khoản, thống kê đặt vé và đổi mật khẩu bảo mật" 
+                                   FontSize="13" Foreground="{StaticResource TextSecondary}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="🔄  Tải lại dữ liệu" 
+                            Style="{StaticResource SecondaryButton}" 
+                            Height="38"
+                            Click="BtnReload_Click"/>
+                </Grid>
+            </Border>
+
+            <!-- MESSAGE BANNER -->
+            <Border x:Name="MessageBanner" CornerRadius="10" Padding="16,12" Margin="0,0,0,18" Visibility="Collapsed">
+                <TextBlock x:Name="MessageBannerText" FontSize="13" FontWeight="SemiBold"/>
+            </Border>
+
+            <!-- 2-COLUMN LAYOUT -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="340"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- LEFT COLUMN: AVATAR & STATS -->
+                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                    <!-- Profile Card -->
+                    <Border Background="White" CornerRadius="14" Padding="24" Margin="0,0,0,18" 
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                            Effect="{StaticResource CardShadow}">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Border Width="80" Height="80" CornerRadius="40" Background="{StaticResource PrimaryBlue}" HorizontalAlignment="Center">
+                                <TextBlock x:Name="AvatarInitialText" Text="P" Foreground="White" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <TextBlock x:Name="ProfileNameText" Text="Khách hàng" FontSize="18" FontWeight="Bold" Foreground="{StaticResource TextMain}" HorizontalAlignment="Center" Margin="0,14,0,2"/>
+                            <TextBlock x:Name="ProfileEmailText" Text="email@example.com" FontSize="12" Foreground="{StaticResource TextSecondary}" HorizontalAlignment="Center"/>
+
+                            <Border Background="{StaticResource LightBlue}" CornerRadius="12" Padding="12,4" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                <TextBlock Text="THÀNH VIÊN RẠP" Foreground="{StaticResource PrimaryBlue}" FontSize="11" FontWeight="Bold"/>
+                            </Border>
+
+                            <Separator Margin="0,16" Background="{StaticResource BorderColor}"/>
+
+                            <Grid>
+                                <TextBlock Text="Ngày tham gia:" Foreground="{StaticResource TextSecondary}" FontSize="12"/>
+                                <TextBlock x:Name="JoinedDateText" Text="--/--/----" Foreground="{StaticResource TextMain}" FontWeight="SemiBold" FontSize="12" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Stats Card -->
+                    <Border Background="White" CornerRadius="14" Padding="20" 
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                            Effect="{StaticResource CardShadow}">
+                        <StackPanel>
+                            <TextBlock Text="THỐNG KÊ HOẠT ĐỘNG" FontSize="12" FontWeight="Bold" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,14"/>
+
+                            <!-- Total Bookings -->
+                            <Grid Margin="0,0,0,10">
+                                <TextBlock Text="Tổng đơn đặt vé" Foreground="{StaticResource TextMain}" FontSize="13"/>
+                                <TextBlock x:Name="StatsBookingsText" Text="0" Foreground="{StaticResource PrimaryBlue}" FontWeight="Bold" FontSize="14" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <!-- Total Tickets -->
+                            <Grid Margin="0,0,0,10">
+                                <TextBlock Text="Tổng vé đã mua" Foreground="{StaticResource TextMain}" FontSize="13"/>
+                                <TextBlock x:Name="StatsTicketsText" Text="0 vé" Foreground="{StaticResource Success}" FontWeight="Bold" FontSize="14" HorizontalAlignment="Right"/>
+                            </Grid>
+
+                            <!-- Total Spent -->
+                            <Grid>
+                                <TextBlock Text="Tổng tiền đã chi" Foreground="{StaticResource TextMain}" FontSize="13"/>
+                                <TextBlock x:Name="StatsSpentText" Text="0 đ" Foreground="{StaticResource AccentOrange}" FontWeight="Bold" FontSize="14" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- RIGHT COLUMN: EDIT PROFILE & CHANGE PASSWORD -->
+                <StackPanel Grid.Column="1">
+                    <!-- Personal Info Card -->
+                    <Border Background="White" CornerRadius="14" Padding="24" Margin="0,0,0,20" 
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                            Effect="{StaticResource CardShadow}">
+                        <StackPanel>
+                            <TextBlock Text="THÔNG TIN CÁ NHÂN" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextMain}" Margin="0,0,0,16"/>
+
+                            <TextBlock Text="HỌ VÀ TÊN" Style="{StaticResource FormLabel}"/>
+                            <TextBox x:Name="FullNameTextBox" Style="{StaticResource InputBox}" Margin="0,0,0,14"/>
+
+                            <TextBlock Text="ĐỊA CHỈ EMAIL (KHÔNG THỂ THAY ĐỔI)" Style="{StaticResource FormLabel}"/>
+                            <TextBox x:Name="EmailTextBox" Style="{StaticResource InputBox}" IsReadOnly="True" Background="{StaticResource BgMain}" Margin="0,0,0,14"/>
+
+                            <TextBlock Text="SỐ ĐIỆN THOẠI" Style="{StaticResource FormLabel}"/>
+                            <TextBox x:Name="PhoneTextBox" Style="{StaticResource InputBox}" Margin="0,0,0,20"/>
+
+                            <Button Content="💾  Lưu thay đổi thông tin" 
+                                    Style="{StaticResource PrimaryButton}" 
+                                    HorizontalAlignment="Left"
+                                    Height="40"
+                                    Click="BtnSaveProfile_Click"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Change Password Card -->
+                    <Border Background="White" CornerRadius="14" Padding="24" 
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1"
+                            Effect="{StaticResource CardShadow}">
+                        <StackPanel>
+                            <TextBlock Text="ĐỔI MẬT KHẨU" FontSize="16" FontWeight="Bold" Foreground="{StaticResource TextMain}" Margin="0,0,0,16"/>
+
+                            <TextBlock Text="MẬT KHẨU HIỆN TẠI" Style="{StaticResource FormLabel}"/>
+                            <PasswordBox x:Name="OldPasswordBox" Style="{StaticResource InputPassword}" Margin="0,0,0,14"/>
+
+                            <TextBlock Text="MẬT KHẨU MỚI (TỐI THIỂU 8 KÝ TỰ)" Style="{StaticResource FormLabel}"/>
+                            <PasswordBox x:Name="NewPasswordBox" Style="{StaticResource InputPassword}" Margin="0,0,0,14"/>
+
+                            <TextBlock Text="XÁC NHẬN MẬT KHẨU MỚI" Style="{StaticResource FormLabel}"/>
+                            <PasswordBox x:Name="ConfirmPasswordBox" Style="{StaticResource InputPassword}" Margin="0,0,0,20"/>
+
+                            <Button Content="🔒  Cập nhật mật khẩu" 
+                                    Style="{StaticResource AccentButton}" 
+                                    HorizontalAlignment="Left"
+                                    Height="40"
+                                    Click="BtnChangePassword_Click"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
