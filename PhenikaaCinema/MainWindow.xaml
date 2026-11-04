@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Window x:Class="PhenikaaCinema.MainWindow"
+﻿<Window x:Class="PhenikaaCinema.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PHENIKAA CINEMA | Hệ Thống Rạp Chiếu Phim Đẳng Cấp"

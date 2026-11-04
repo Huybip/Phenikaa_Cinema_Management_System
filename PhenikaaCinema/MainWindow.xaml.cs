@@ -585,7 +585,7 @@ namespace PhenikaaCinema
             object sender,
             RoutedEventArgs e)
         {
-            MoviesHeading.Text = "Phim sắp chiếu";
+            // MoviesHeading.Text = "Phim sắp chiếu";
 
             MessageBox.Show(
                 "Chức năng lọc phim sắp chiếu cần được kết nối với dữ liệu ngày phát hành.",
