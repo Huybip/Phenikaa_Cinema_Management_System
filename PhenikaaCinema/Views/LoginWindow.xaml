@@ -28,8 +28,8 @@
 
                 <!-- BRAND HEADER -->
                 <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Border Background="{StaticResource AccentOrange}" CornerRadius="10" Width="44" Height="44" Margin="0,0,12,0">
-                        <TextBlock Text="🎬" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border Background="White" CornerRadius="10" Width="48" Height="48" Margin="0,0,12,0" Padding="4">
+                        <Image Source="/Assets/phenikaa_logo.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock Text="PHENIKAA CINEMA" FontSize="20" FontWeight="ExtraBold" Foreground="White"/>

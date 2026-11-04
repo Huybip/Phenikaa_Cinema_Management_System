@@ -1,484 +1,456 @@
-﻿ <Window x:Class="PhenikaaCinema.MainWindow"
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="PhenikaaCinema.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="PHENIKAA CINEMA | Trang chủ"
-        Height="806"
-        Width="1554"
-        MinHeight="700"
-        MinWidth="1050"
+        Title="PHENIKAA CINEMA | Hệ Thống Rạp Chiếu Phim Đẳng Cấp"
+        Height="880"
+        Width="1440"
+        MinHeight="720"
+        MinWidth="1100"
         WindowStartupLocation="CenterScreen"
-        Background="#FFFFFF"
-        Foreground="#15324B">
-
-    <Window.Resources>
-        <!-- BANG MAU PHENIKAA -->
-        <SolidColorBrush x:Key="BrandBlue" Color="#1769AA"/>
-        <SolidColorBrush x:Key="BrandDarkBlue" Color="#124B7A"/>
-        <SolidColorBrush x:Key="BrandOrange" Color="#F58220"/>
-        <SolidColorBrush x:Key="PageBackground" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="LightBackground" Color="#F4F8FC"/>
-        <SolidColorBrush x:Key="PanelBackground" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="PrimaryText" Color="#15324B"/>
-        <SolidColorBrush x:Key="SecondaryText" Color="#63778A"/>
-        <SolidColorBrush x:Key="BorderColor" Color="#E1EAF2"/>
-
-        <!-- STYLE MENU -->
-        <Style x:Key="NavButton" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#526579"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="Padding" Value="12,9"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Margin" Value="2,0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="ButtonBorder"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="7"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="#EAF4FC"/>
-                                <Setter Property="Foreground"
-                                        Value="#1769AA"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="#D9EBFA"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- NUT CHINH MAU XANH -->
-        <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#1769AA"/>
-            <Setter Property="Foreground" Value="#FFFFFF"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Padding" Value="20,12"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="ButtonBorder"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="7"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="#124B7A"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="#0D3C63"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- NUT NHAN MAU CAM -->
-        <Style x:Key="AccentButton" TargetType="Button">
-            <Setter Property="Background" Value="#F58220"/>
-            <Setter Property="Foreground" Value="#FFFFFF"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Padding" Value="18,12"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="ButtonBorder"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="7"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="#D96B10"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="#B95608"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- NUT PHU -->
-        <Style x:Key="SecondaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#FFFFFF"/>
-            <Setter Property="Foreground" Value="#1769AA"/>
-            <Setter Property="BorderBrush" Value="#1769AA"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Padding" Value="18,12"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="ButtonBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="7"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="#EAF4FC"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder"
-                                        Property="Background"
-                                        Value="#D9EBFA"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
+        Background="{StaticResource BgMain}"
+        FontFamily="Segoe UI">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="76"/>
+            <RowDefinition Height="74"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- HEADER -->
+        <!-- ================= TOP HEADER NAVIGATION ================= -->
         <Border Grid.Row="0"
-                Background="#FFFFFF"
-                BorderBrush="#E1EAF2"
-                BorderThickness="0,0,0,1">
-            <Grid Margin="36,0">
+                Background="White"
+                BorderBrush="{StaticResource BorderColor}"
+                BorderThickness="0,0,0,1"
+                Effect="{StaticResource CardShadow}">
+            <Grid Margin="32,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- LOGO -->
-                <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center">
-                    <TextBlock Text="PHENIKAA"
-                               FontSize="23"
-                               FontWeight="ExtraBold"
-                               Foreground="#1769AA"/>
-                    <TextBlock Text=" CINEMA"
-                               FontSize="23"
-                               FontWeight="ExtraBold"
-                               Foreground="#F58220"/>
+                <!-- BRAND LOGO -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Cursor="Hand" MouseDown="HomeMenuButton_Click">
+                    <Border Width="46" Height="46" CornerRadius="10" Background="White" Margin="0,0,12,0" 
+                            BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Padding="3">
+                        <Image Source="/Assets/phenikaa_logo.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="PHENIKAA"
+                                       FontSize="20"
+                                       FontWeight="ExtraBold"
+                                       Foreground="{StaticResource DarkBlue}"/>
+                            <TextBlock Text=" CINEMA"
+                                       FontSize="20"
+                                       FontWeight="ExtraBold"
+                                       Foreground="{StaticResource AccentOrange}"/>
+                        </StackPanel>
+                        <TextBlock Text="ĐIỆN ẢNH ĐẲNG CẤP SINH VIÊN"
+                                   FontSize="10"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   Margin="0,1,0,0"/>
+                    </StackPanel>
                 </StackPanel>
 
-                <!-- MENU -->
+                <!-- TOP MENU LINKS -->
                 <StackPanel Grid.Column="1"
                             Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
 
                     <Button Content="Trang chủ"
-                            Style="{StaticResource NavButton}"
-                            Foreground="#1769AA"
+                            Style="{StaticResource GhostButton}"
                             FontWeight="Bold"
+                            Foreground="{StaticResource PrimaryBlue}"
+                            Margin="0,0,6,0"
                             Click="HomeMenuButton_Click"/>
 
                     <Button Content="Phim đang chiếu"
-                            Style="{StaticResource NavButton}"
+                            Style="{StaticResource GhostButton}"
+                            Margin="0,0,6,0"
                             Click="NowShowingButton_Click"/>
 
                     <Button Content="Phim sắp chiếu"
-                            Style="{StaticResource NavButton}"
+                            Style="{StaticResource GhostButton}"
+                            Margin="0,0,6,0"
                             Click="ComingSoonButton_Click"/>
 
                     <Button Content="Về chúng tôi"
-                            Style="{StaticResource NavButton}"
+                            Style="{StaticResource GhostButton}"
                             Click="AboutButton_Click"/>
                 </StackPanel>
 
-                <!-- TIM KIEM VA DANG NHAP -->
+                <!-- SEARCH & AUTH CONTROLS -->
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
                             VerticalAlignment="Center">
 
-                    <TextBox x:Name="SearchTextBox"
-                             Width="175"
-                             Height="36"
-                             Padding="10,0"
-                             VerticalContentAlignment="Center"
-                             Background="#F4F8FC"
-                             Foreground="#15324B"
-                             BorderBrush="#D5E2EE"
-                             CaretBrush="#1769AA"
-                             ToolTip="Tìm tên phim"
-                             TextChanged="SearchTextBox_TextChanged"
-                             Margin="0,0,12,0"/>
+                    <!-- Search Input Box -->
+                    <Border Background="#F1F5F9"
+                            CornerRadius="8"
+                            Height="40"
+                            Width="240"
+                            BorderBrush="{StaticResource BorderColor}"
+                            BorderThickness="1"
+                            Padding="10,0"
+                            Margin="0,0,14,0">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="&#xE721;" 
+                                       FontFamily="Segoe MDL2 Assets" 
+                                       FontSize="13" 
+                                       Foreground="{StaticResource TextSecondary}" 
+                                       VerticalAlignment="Center" 
+                                       Margin="0,0,8,0"/>
+                            <TextBox x:Name="SearchTextBox"
+                                     Grid.Column="1"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     FontSize="13"
+                                     Foreground="{StaticResource TextMain}"
+                                     VerticalContentAlignment="Center"
+                                     ToolTip="Nhập tên phim để tìm nhanh"
+                                     TextChanged="SearchTextBox_TextChanged"/>
+                        </Grid>
+                    </Border>
 
+                    <!-- Login Button -->
                     <Button x:Name="LoginButton"
-                            Content="ĐĂNG NHẬP"
+                            Content="Đăng nhập"
                             Style="{StaticResource PrimaryButton}"
-                            Padding="18,10"
+                            Height="40"
+                            Padding="20,0"
                             Click="OpenLoginButton_Click"/>
 
+                    <!-- Logged In Panel -->
                     <StackPanel x:Name="LoggedInPanel"
+                                Orientation="Horizontal"
                                 Visibility="Collapsed"
                                 VerticalAlignment="Center">
-                        <TextBlock x:Name="TopUserName"
-                                   Text=""
-                                   Foreground="#15324B"
-                                   FontWeight="SemiBold"
-                                   Margin="4,0"/>
+                        <Border Background="{StaticResource LightBlue}" CornerRadius="20" Padding="14,6" Margin="0,0,10,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE77B;" FontFamily="Segoe MDL2 Assets" FontSize="13" Foreground="{StaticResource DarkBlue}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                <TextBlock x:Name="TopUserName"
+                                           Text="User"
+                                           Foreground="{StaticResource DarkBlue}"
+                                           FontWeight="Bold"
+                                           FontSize="13"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
                         <Button Content="Đăng xuất"
-                                Style="{StaticResource NavButton}"
+                                Style="{StaticResource DangerButton}"
+                                Height="36"
+                                Padding="12,0"
                                 Click="LogoutButton_Click"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
         </Border>
 
-        <!-- NOI DUNG TRANG CHU -->
+        <!-- ================= MAIN CONTENT SCROLLVIEWER ================= -->
         <ScrollViewer Grid.Row="1"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled">
-
             <StackPanel>
 
-                <!-- BANNER -->
-                <Border Margin="36,28,36,0"
-                        Height="330"
-                        CornerRadius="14"
+                <!-- ===== HERO BANNER SECTION ===== -->
+                <Border Margin="32,24,32,0"
+                        CornerRadius="16"
                         ClipToBounds="True"
-                        Background="#EAF4FC">
+                        Effect="{StaticResource CardShadow}">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#0F172A" Offset="0.0"/>
+                            <GradientStop Color="#1E3A8A" Offset="0.5"/>
+                            <GradientStop Color="#1D4ED8" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
 
-                    <Grid>
+                    <Grid MinHeight="360" Margin="48,36">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.15*"/>
-                            <ColumnDefinition Width="0.85*"/>
+                            <ColumnDefinition Width="1.3*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- NOI DUNG BANNER -->
-                        <Border Grid.Column="0"
-                                Background="#EAF4FC">
-                            <StackPanel VerticalAlignment="Center"
-                                        Margin="38,20,20,20">
-
-                                <TextBlock Text="TRẢI NGHIỆM ĐIỆN ẢNH"
-                                           Foreground="#F58220"
-                                           FontSize="12"
-                                           FontWeight="Bold"
-                                           Margin="0,0,0,16"/>
-
-                                <TextBlock Text="Mỗi bộ phim,&#10;một thế giới."
-                                           Foreground="#15324B"
-                                           FontSize="42"
-                                           FontWeight="ExtraBold"
-                                           TextWrapping="Wrap"
-                                           Margin="0,0,0,14"/>
-
-                                <TextBlock Text="Khám phá những câu chuyện đặc sắc trên màn ảnh lớn cùng PHENIKAA CINEMA."
-                                           FontSize="15"
-                                           Foreground="#526579"
-                                           TextWrapping="Wrap"
-                                           MaxWidth="470"
-                                           Margin="0,0,0,24"/>
-
+                        <!-- LEFT TEXT & CALL-TO-ACTION -->
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,24,0">
+                            <Border Background="#F97316" 
+                                    CornerRadius="6" 
+                                    Padding="10,4" 
+                                    HorizontalAlignment="Left" 
+                                    Margin="0,0,0,16">
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="KHÁM PHÁ PHIM  →"
-                                            Style="{StaticResource PrimaryButton}"
-                                            Click="NowShowingButton_Click"/>
-
-                                    <Button Content="TÌM HIỂU THÊM"
-                                            Style="{StaticResource SecondaryButton}"
-                                            Margin="12,0,0,0"
-                                            Click="AboutButton_Click"/>
+                                    <TextBlock Text="&#xE8B2;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="12" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                    <TextBlock Text="PHENIKAA UNIVERSITY CINEMA" Foreground="White" FontSize="11" FontWeight="Bold"/>
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
+                            </Border>
 
-                        <!-- HINH TRANG TRI -->
-                        <Grid Grid.Column="1"
-                              Background="#1769AA">
-
-                            <Ellipse Width="280"
-                                     Height="280"
-                                     Stroke="#55FFFFFF"
-                                     StrokeThickness="1"
-                                     HorizontalAlignment="Center"
-                                     VerticalAlignment="Center"/>
-
-                            <Ellipse Width="220"
-                                     Height="220"
-                                     Stroke="#66F58220"
-                                     StrokeThickness="28"
-                                     HorizontalAlignment="Center"
-                                     VerticalAlignment="Center"/>
-
-                            <Ellipse Width="115"
-                                     Height="115"
-                                     Fill="#30FFFFFF"
-                                     HorizontalAlignment="Center"
-                                     VerticalAlignment="Center"/>
-
-                            <TextBlock Text="P"
-                                       FontSize="110"
-                                       FontWeight="ExtraBold"
-                                       Foreground="#FFFFFF"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-
-                            <TextBlock Text="YOUR MOVIE. YOUR MOMENT."
-                                       FontSize="11"
+                            <TextBlock Text="TRẢI NGHIỆM ĐIỆN ẢNH"
+                                       Foreground="#93C5FD"
+                                       FontSize="14"
                                        FontWeight="Bold"
-                                       Foreground="#FFFFFF"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Bottom"
-                                       Margin="0,0,0,24"/>
-                        </Grid>
+                                       />
+
+                            <TextBlock Text="Thế Giới Điện Ảnh&#10;Đỉnh Cao &amp; Sống Động"
+                                       Foreground="White"
+                                       FontSize="40"
+                                       FontWeight="ExtraBold"
+                                       LineHeight="48"
+                                       Margin="0,8,0,16"/>
+
+                            <TextBlock Text="Hòa mình vào từng khoảnh khắc cảm xúc với màn chiếu Laser 4K, hệ thống âm thanh vòm Dolby Atmos và công nghệ sơ đồ phòng chiếu 2D/3D hiện đại."
+                                       FontSize="14"
+                                       Foreground="#E2E8F0"
+                                       TextWrapping="Wrap"
+                                       LineHeight="22"
+                                       MaxWidth="560"
+                                       Margin="0,0,0,28"/>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="🎬  ĐẶT VÉ NGAY"
+                                        Style="{StaticResource AccentButton}"
+                                        Height="46"
+                                        Padding="28,0"
+                                        FontSize="14"
+                                        Click="NowShowingButton_Click"/>
+
+                                <Button Content="KHÁM PHÁ THÊM  →"
+                                        Style="{StaticResource SecondaryButton}"
+                                        Height="46"
+                                        Padding="22,0"
+                                        Margin="14,0,0,0"
+                                        FontSize="14"
+                                        Click="AboutButton_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- RIGHT HERO ILLUSTRATION / BRAND CARD -->
+                        <Border Grid.Column="1" 
+                                Background="#1E293B" 
+                                CornerRadius="16" 
+                                BorderBrush="#3B82F6" 
+                                BorderThickness="1.5"
+                                Padding="28"
+                                VerticalAlignment="Center"
+                                Effect="{StaticResource CardShadow}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Logo on Card -->
+                                <Border Grid.Row="0" Width="90" Height="90" CornerRadius="45" Background="White" Margin="0,0,0,16" HorizontalAlignment="Center" Effect="{StaticResource CardShadow}">
+                                    <Image Source="/Assets/phenikaa_logo.png" Stretch="Uniform" Margin="10"/>
+                                </Border>
+
+                                <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,18">
+                                    <TextBlock Text="PHENIKAA CINEMA" 
+                                               Foreground="White" 
+                                               FontSize="20" 
+                                               FontWeight="ExtraBold" 
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Rạp Chiếu Phim Đẳng Cấp Trường Phenikaa" 
+                                               Foreground="#93C5FD" 
+                                               FontSize="12" 
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" 
+                                               Margin="0,4,0,0"/>
+                                </StackPanel>
+
+                                <Border Grid.Row="2" Background="#0F172A" CornerRadius="12" Padding="16,12">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                            <TextBlock Text="4K" Foreground="{StaticResource AccentOrange}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="Laser Screen" Foreground="#94A3B8" FontSize="11" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                                            <TextBlock Text="7.1" Foreground="#38BDF8" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="Dolby Atmos" Foreground="#94A3B8" FontSize="11" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                                            <TextBlock Text="VIP" Foreground="#34D399" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="Ghế Đôi Êm" Foreground="#94A3B8" FontSize="11" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Border>
 
-                <!-- DANH SACH PHIM -->
-                <StackPanel Margin="36,32,36,0">
-                    <Grid Margin="0,0,0,18">
+                <!-- ===== FEATURE BADGES STRIP ===== -->
+                <Grid Margin="32,24,32,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Style="{StaticResource CardBorder}" Margin="0,0,12,0" Padding="16">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="42" Height="42" CornerRadius="8" Background="{StaticResource LightBlue}" Margin="0,0,12,0">
+                                <TextBlock Text="&#xE8B2;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{StaticResource PrimaryBlue}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Phim Bom Tấn Mới" FontWeight="Bold" FontSize="13" Foreground="{StaticResource TextMain}"/>
+                                <TextBlock Text="Cập nhật liên tục mỗi tuần" FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="1" Style="{StaticResource CardBorder}" Margin="0,0,12,0" Padding="16">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="42" Height="42" CornerRadius="8" Background="{StaticResource LightOrange}" Margin="0,0,12,0">
+                                <TextBlock Text="&#xE719;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{StaticResource AccentOrange}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Giá Vé Sinh Viên" FontWeight="Bold" FontSize="13" Foreground="{StaticResource TextMain}"/>
+                                <TextBlock Text="Ưu đãi chỉ từ 45.000đ" FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource CardBorder}" Margin="0,0,12,0" Padding="16">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="42" Height="42" CornerRadius="8" Background="#DCFCE7" Margin="0,0,12,0">
+                                <TextBlock Text="&#xE809;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{StaticResource Success}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Chọn Ghế 2D / 3D" FontWeight="Bold" FontSize="13" Foreground="{StaticResource TextMain}"/>
+                                <TextBlock Text="Sơ đồ trực quan, tiện lợi" FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="3" Style="{StaticResource CardBorder}" Padding="16">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="42" Height="42" CornerRadius="8" Background="#F1F5F9" Margin="0,0,12,0">
+                                <TextBlock Text="&#xE8A1;" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{StaticResource DarkBlue}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Vé Điện Tử QR Code" FontWeight="Bold" FontSize="13" Foreground="{StaticResource TextMain}"/>
+                                <TextBlock Text="Vào rạp nhanh không cần xếp hàng" FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- ===== MOVIES SECTION HEADER & FILTERS ===== -->
+                <StackPanel Margin="32,32,32,0">
+                    <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel>
-                            <TextBlock x:Name="MoviesHeading"
-                                       Text="Phim đang chiếu"
-                                       FontSize="25"
-                                       FontWeight="Bold"
-                                       Foreground="#15324B"/>
-
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Border Width="4" Height="26" CornerRadius="2" Background="{StaticResource PrimaryBlue}" Margin="0,0,10,0"/>
+                                <TextBlock x:Name="MoviesHeading"
+                                           Text="Phim Đang Chiếu Tại Rạp"
+                                           FontSize="24"
+                                           FontWeight="ExtraBold"
+                                           Foreground="{StaticResource TextMain}"/>
+                            </StackPanel>
                             <TextBlock x:Name="MoviesStatusText"
-                                       Text="Đang tải danh sách phim..."
-                                       FontSize="12"
-                                       Foreground="#63778A"
-                                       Margin="0,6,0,0"/>
+                                       Text="Đang tải danh sách phim từ hệ thống..."
+                                       FontSize="13"
+                                       Foreground="{StaticResource TextSecondary}"
+                                       Margin="14,4,0,0"/>
                         </StackPanel>
 
-                        <Button Grid.Column="1"
-                                Content="LÀM MỚI  ↻"
-                                Style="{StaticResource SecondaryButton}"
-                                Height="43"
-                                Click="LoadMovies_Click"/>
+                        <!-- Filter buttons -->
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button Content="Tất cả phim"
+                                    Style="{StaticResource GhostButton}"
+                                    FontWeight="SemiBold"
+                                    Margin="0,0,6,0"
+                                    Click="HomeMenuButton_Click"/>
+
+                            <Button Content="Phim đang chiếu"
+                                    Style="{StaticResource GhostButton}"
+                                    FontWeight="SemiBold"
+                                    Margin="0,0,6,0"
+                                    Click="NowShowingButton_Click"/>
+
+                            <Button Content="Làm mới  ↻"
+                                    Style="{StaticResource SecondaryButton}"
+                                    Height="38"
+                                    Padding="14,0"
+                                    Click="LoadMovies_Click"/>
+                        </StackPanel>
                     </Grid>
 
+                    <!-- MOVIE CARDS WRAP CONTAINER -->
                     <ItemsControl x:Name="MoviesItemsControl">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel/>
+                                <WrapPanel ItemWidth="240" Margin="0,0,0,20"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </StackPanel>
 
-                <!-- KHU VUC GIOI THIEU -->
-                <Border Margin="36,28,36,0"
-                        Background="#F4F8FC"
-                        BorderBrush="#E1EAF2"
-                        BorderThickness="1"
-                        CornerRadius="12"
-                        Padding="26">
+                <!-- ===== FOOTER SECTION ===== -->
+                <Border Margin="0,48,0,0"
+                        Background="{StaticResource DarkBlue}"
+                        Padding="36,36">
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel>
-                            <TextBlock Text="ĐIỆN ẢNH KẾT NỐI CẢM XÚC"
-                                       FontSize="18"
-                                       FontWeight="Bold"
-                                       Foreground="#1769AA"/>
-
-                            <TextBlock Text="Tìm kiếm bộ phim yêu thích và chuẩn bị cho trải nghiệm điện ảnh tiếp theo của bạn."
-                                       Foreground="#63778A"
-                                       TextWrapping="Wrap"
-                                       Margin="0,8,0,0"/>
-                        </StackPanel>
-
-                        <TextBlock Grid.Column="1"
-                                   Text="PHENIKAA CINEMA"
-                                   Foreground="#F58220"
-                                   FontSize="17"
-                                   FontWeight="ExtraBold"
-                                   VerticalAlignment="Center"
-                                   Margin="20,0,0,0"/>
-                    </Grid>
-                </Border>
-
-                <!-- FOOTER -->
-                <Border Margin="0,32,0,0"
-                        Padding="36,24"
-                        Background="#124B7A"
-                        BorderBrush="#0D3C63"
-                        BorderThickness="0,1,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel>
-                            <TextBlock Text="PHENIKAA CINEMA"
-                                       Foreground="#FFFFFF"
-                                       FontWeight="Bold"
-                                       FontSize="15"/>
-
-                            <TextBlock Text="Không gian dành cho những người yêu điện ảnh."
-                                       Foreground="#D8E8F5"
+                        <!-- Brand Info -->
+                        <StackPanel Grid.Column="0" Margin="0,0,36,0">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,14">
+                                <Border Width="40" Height="40" CornerRadius="8" Background="White" Margin="0,0,12,0" Padding="3">
+                                    <Image Source="/Assets/phenikaa_logo.png" Stretch="Uniform"/>
+                                </Border>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="PHENIKAA CINEMA" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                                    <TextBlock Text="Trường Đại học Phenikaa" Foreground="#93C5FD" FontSize="12"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <TextBlock Text="Hệ thống rạp chiếu phim hiện đại phục vụ sinh viên và cán bộ giảng viên Trường Đại học Phenikaa. Mang lại những trải nghiệm nghệ thuật và giải trí tuyệt vời nhất."
+                                       Foreground="#BFDBFE"
                                        FontSize="12"
-                                       Margin="0,6,0,0"/>
+                                       LineHeight="18"
+                                       TextWrapping="Wrap"/>
                         </StackPanel>
 
-                        <TextBlock Grid.Column="1"
-                                   Text="© PHENIKAA CINEMA"
-                                   Foreground="#D8E8F5"
-                                   VerticalAlignment="Center"
-                                   FontSize="12"/>
-                        
+                        <!-- Contact & Address -->
+                        <StackPanel Grid.Column="1" Margin="0,0,24,0">
+                            <TextBlock Text="THÔNG TIN LIÊN HỆ" Foreground="White" FontWeight="Bold" FontSize="13" Margin="0,0,0,12"/>
+                            <TextBlock Text="📍 Địa chỉ: Yên Nghĩa, Hà Đông, Hà Nội" Foreground="#BFDBFE" FontSize="12" Margin="0,0,0,6"/>
+                            <TextBlock Text="📞 Hotline: 024.6291.8118" Foreground="#BFDBFE" FontSize="12" Margin="0,0,0,6"/>
+                            <TextBlock Text="✉️ Email: cinema@phenikaa-uni.edu.vn" Foreground="#BFDBFE" FontSize="12"/>
+                        </StackPanel>
+
+                        <!-- Copyright -->
+                        <StackPanel Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                            <TextBlock Text="© 2026 PHENIKAA CINEMA" Foreground="White" FontWeight="SemiBold" FontSize="12" HorizontalAlignment="Right"/>
+                            <TextBlock Text="All rights reserved • Developed with C# WPF" Foreground="#93C5FD" FontSize="11" Margin="0,4,0,0" HorizontalAlignment="Right"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
 

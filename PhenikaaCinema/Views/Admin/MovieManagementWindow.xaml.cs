@@ -1,3 +1,6 @@
+using System.IO;
+using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -214,6 +217,7 @@ namespace PhenikaaCinema.Views.Admin
                 EndDatePicker.SelectedDate = movie.EndDate;
 
                 PosterUrlTextBox.Text = movie.PosterUrl ?? "";
+                UpdatePosterPreview(movie.PosterUrl);
                 TrailerUrlTextBox.Text = movie.TrailerUrl ?? "";
 
                 SelectStatus(movie.Status);
@@ -578,6 +582,7 @@ namespace PhenikaaCinema.Views.Admin
                 EndDatePicker.SelectedDate = null;
 
                 PosterUrlTextBox.Clear();
+                UpdatePosterPreview(null);
                 TrailerUrlTextBox.Clear();
 
                 StatusComboBox.SelectedIndex = 0;
@@ -617,6 +622,96 @@ namespace PhenikaaCinema.Views.Admin
         {
             Close();
         }
-    }
+    
+        private void BrowsePosterButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var dialog = new OpenFileDialog
+                {
+                    Title = "Chọn ảnh poster phim",
+                    Filter = "Tệp hình ảnh (*.jpg;*.jpeg;*.png;*.webp;*.bmp)|*.jpg;*.jpeg;*.png;*.webp;*.bmp|Tất cả tệp (*.*)|*.*",
+                    Multiselect = false
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    string selectedFile = dialog.FileName;
+                    if (!File.Exists(selectedFile)) return;
+
+                    string postersDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "Posters");
+                    if (!Directory.Exists(postersDir))
+                    {
+                        Directory.CreateDirectory(postersDir);
+                    }
+
+                    string ext = Path.GetExtension(selectedFile);
+                    string safeFileName = "poster_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_" + Guid.NewGuid().ToString().Substring(0, 6) + ext;
+                    string destPath = Path.Combine(postersDir, safeFileName);
+
+                    File.Copy(selectedFile, destPath, true);
+
+                    string relativePath = Path.Combine("Images", "Posters", safeFileName);
+                    PosterUrlTextBox.Text = relativePath;
+                    UpdatePosterPreview(destPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải ảnh: " + ex.Message, "PHENIKAA CINEMA", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void PosterUrlTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdatePosterPreview(PosterUrlTextBox.Text);
+        }
+
+        private void UpdatePosterPreview(string pathOrUrl)
+        {
+            if (string.IsNullOrWhiteSpace(pathOrUrl))
+            {
+                PosterPreviewImage.Source = null;
+                PosterPlaceholderPanel.Visibility = Visibility.Visible;
+                return;
+            }
+
+            try
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+
+                if (pathOrUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+                    pathOrUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                {
+                    bitmap.UriSource = new Uri(pathOrUrl, UriKind.Absolute);
+                }
+                else
+                {
+                    string fullPath = Path.IsPathRooted(pathOrUrl)
+                        ? pathOrUrl
+                        : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pathOrUrl.TrimStart(new char[] { '\\', '/' }));
+
+                    if (!File.Exists(fullPath))
+                    {
+                        PosterPreviewImage.Source = null;
+                        PosterPlaceholderPanel.Visibility = Visibility.Visible;
+                        return;
+                    }
+                    bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
+                }
+
+                bitmap.EndInit();
+                PosterPreviewImage.Source = bitmap;
+                PosterPlaceholderPanel.Visibility = Visibility.Collapsed;
+            }
+            catch
+            {
+                PosterPreviewImage.Source = null;
+                PosterPlaceholderPanel.Visibility = Visibility.Visible;
+            }
+        }
+}
 }
 

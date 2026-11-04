@@ -64,10 +64,8 @@
 
                 <!-- LOGO -->
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Border Background="{StaticResource AccentOrange}" CornerRadius="8" Width="36" Height="36" Margin="0,0,10,0">
-                        <TextBlock Text="&#xE8B2;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border Background="White" CornerRadius="8" Width="38" Height="38" Margin="0,0,10,0" Padding="3" BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
+                        <Image Source="/Assets/phenikaa_logo.png" Stretch="Uniform"/>
                     </Border>
                     <TextBlock Text="PHENIKAA" Foreground="{StaticResource PrimaryBlue}" FontSize="20" FontWeight="ExtraBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
                     <TextBlock Text=" CINEMA" Foreground="{StaticResource AccentOrange}" FontSize="20" FontWeight="ExtraBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>

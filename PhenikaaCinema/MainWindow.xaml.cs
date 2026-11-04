@@ -1,3 +1,6 @@
+using System.IO;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.Effects;
 using System;
 using System.Data;
 using System.Windows;
@@ -123,6 +126,7 @@ namespace PhenikaaCinema
         }
 
         // Hien thi cac the phim tren homepage
+                // Hien thi cac the phim tren homepage
         private void DisplayMovies(DataTable table)
         {
             MoviesItemsControl.ItemsSource = null;
@@ -131,36 +135,23 @@ namespace PhenikaaCinema
             if (table == null || table.Rows.Count == 0)
             {
                 MoviesItemsControl.Items.Add(
-                    CreateMessageCard(
-                        "Hiện chưa có phim để hiển thị."));
-
+                    CreateMessageCard("Hiện chưa có phim nào để hiển thị trong mục này."));
                 return;
             }
 
-            string titleColumn = FindColumn(
-                table, "Title", "MovieTitle", "MovieName", "Name");
-
-            string genreColumn = FindColumn(
-                table, "GenreName", "Genre", "Category");
-
-            string descriptionColumn = FindColumn(
-                table, "Description", "Synopsis", "Summary");
-
-            string releaseDateColumn = FindColumn(
-                table, "ReleaseDate", "ReleaseYear", "Year");
-
-            string idColumn = FindColumn(
-                table, "MovieId", "Id", "MovieID");
+            string titleColumn = FindColumn(table, "Title", "MovieTitle", "MovieName", "Name");
+            string genreColumn = FindColumn(table, "GenreNames", "GenreName", "Genre", "Category");
+            string descriptionColumn = FindColumn(table, "Description", "Synopsis", "Summary");
+            string releaseDateColumn = FindColumn(table, "ReleaseDate", "ReleaseYear", "Year");
+            string idColumn = FindColumn(table, "MovieId", "Id", "MovieID");
+            string posterColumn = FindColumn(table, "PosterUrl", "Poster", "ImagePath", "Image");
+            string durationColumn = FindColumn(table, "DurationMinutes", "Duration");
 
             if (titleColumn == null)
             {
                 MoviesItemsControl.Items.Add(
-                    CreateMessageCard(
-                        "Không tìm thấy cột tên phim trong bảng Movies."));
-
-                MoviesStatusText.Text =
-                    "Vui lòng kiểm tra cấu trúc bảng Movies.";
-
+                    CreateMessageCard("Không tìm thấy cột tên phim trong bảng Movies."));
+                MoviesStatusText.Text = "Vui lòng kiểm tra cấu trúc bảng Movies.";
                 return;
             }
 
@@ -171,6 +162,8 @@ namespace PhenikaaCinema
                 string description = GetValue(row, descriptionColumn);
                 string releaseDate = GetValue(row, releaseDateColumn);
                 string movieId = GetValue(row, idColumn);
+                string posterUrl = posterColumn != null ? GetValue(row, posterColumn) : null;
+                string duration = durationColumn != null ? GetValue(row, durationColumn) : null;
 
                 if (string.IsNullOrWhiteSpace(title))
                     title = "Phim chưa có tên";
@@ -181,68 +174,183 @@ namespace PhenikaaCinema
                         genre,
                         description,
                         releaseDate,
-                        movieId));
+                        movieId,
+                        posterUrl,
+                        duration));
             }
         }
 
-        // Tao the phim
+        // Tao the phim hien dai (White Card + Blue/Orange Theme + Real Poster Support)
         private Border CreateMovieCard(
             string title,
             string genre,
             string description,
             string releaseDate,
-            string movieId)
+            string movieId,
+            string posterUrl = null,
+            string duration = null)
         {
             Border card = new Border
             {
-                Width = 190,
-                Margin = new Thickness(0, 0, 16, 20),
-                Background = new SolidColorBrush(
-                    Color.FromRgb(27, 27, 34)),
-                CornerRadius = new CornerRadius(9),
-                ClipToBounds = true
+                Width = 220,
+                Margin = new Thickness(0, 0, 20, 24),
+                Background = Brushes.White,
+                CornerRadius = new CornerRadius(12),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(226, 232, 240)),
+                BorderThickness = new Thickness(1),
+                ClipToBounds = true,
+                Effect = new DropShadowEffect
+                {
+                    BlurRadius = 14,
+                    ShadowDepth = 2,
+                    Direction = 270,
+                    Color = Colors.Black,
+                    Opacity = 0.08
+                }
             };
 
             StackPanel content = new StackPanel();
 
-            // Poster minh hoa, chua phai poster that
-            Border poster = new Border
+            // Khung poster
+            Grid posterContainer = new Grid
             {
-                Height = 225,
-                Background = new SolidColorBrush(
-                    Color.FromRgb(64, 24, 34))
+                Height = 230,
+                ClipToBounds = true,
+                Background = new SolidColorBrush(Color.FromRgb(241, 245, 249))
             };
 
-            Grid posterGrid = new Grid();
-
-            TextBlock posterIcon = new TextBlock
+            bool imageLoaded = false;
+            if (!string.IsNullOrWhiteSpace(posterUrl))
             {
-                Text = "▶",
-                FontSize = 42,
-                Foreground = Brushes.White,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
+                try
+                {
+                    BitmapImage bmp = new BitmapImage();
+                    bmp.BeginInit();
+                    bmp.CacheOption = BitmapCacheOption.OnLoad;
 
-            TextBlock posterLabel = new TextBlock
+                    if (posterUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+                        posterUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                    {
+                        bmp.UriSource = new Uri(posterUrl, UriKind.Absolute);
+                    }
+                    else
+                    {
+                        string fullPath = Path.IsPathRooted(posterUrl)
+                            ? posterUrl
+                            : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, posterUrl.TrimStart('\\', '/'));
+
+                        if (File.Exists(fullPath))
+                        {
+                            bmp.UriSource = new Uri(fullPath, UriKind.Absolute);
+                        }
+                    }
+
+                    if (bmp.UriSource != null)
+                    {
+                        bmp.EndInit();
+                        Image img = new Image
+                        {
+                            Source = bmp,
+                            Stretch = Stretch.UniformToFill,
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center
+                        };
+                        posterContainer.Children.Add(img);
+                        imageLoaded = true;
+                    }
+                }
+                catch { }
+            }
+
+            if (!imageLoaded)
             {
-                Text = "PHENIKAA\nCINEMA",
-                FontSize = 15,
-                FontWeight = FontWeights.Bold,
-                Foreground = Brushes.White,
-                TextAlignment = TextAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                Margin = new Thickness(8, 0, 8, 16)
-            };
+                // Fallback poster phong cách Phenikaa Cinema
+                Border fallbackBg = new Border
+                {
+                    Background = new LinearGradientBrush(
+                        Color.FromRgb(30, 58, 138),
+                        Color.FromRgb(15, 23, 42),
+                        new Point(0, 0),
+                        new Point(1, 1))
+                };
+                posterContainer.Children.Add(fallbackBg);
 
-            posterGrid.Children.Add(posterIcon);
-            posterGrid.Children.Add(posterLabel);
-            poster.Child = posterGrid;
+                StackPanel fallbackContent = new StackPanel
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
 
+                TextBlock filmIcon = new TextBlock
+                {
+                    Text = "\uE8B2",
+                    FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                    FontSize = 38,
+                    Foreground = Brushes.White,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+
+                TextBlock brandText = new TextBlock
+                {
+                    Text = "PHENIKAA\nCINEMA",
+                    FontSize = 13,
+                    FontWeight = FontWeights.Bold,
+                    Foreground = new SolidColorBrush(Color.FromRgb(147, 197, 253)),
+                    TextAlignment = TextAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(0, 10, 0, 0)
+                };
+
+                fallbackContent.Children.Add(filmIcon);
+                fallbackContent.Children.Add(brandText);
+                posterContainer.Children.Add(fallbackContent);
+            }
+
+            // Duration Pill ở góc trên phải
+            if (!string.IsNullOrWhiteSpace(duration) && int.TryParse(duration, out int durVal) && durVal > 0)
+            {
+                Border durationBadge = new Border
+                {
+                    Background = new SolidColorBrush(Color.FromArgb(200, 15, 23, 42)),
+                    CornerRadius = new CornerRadius(6),
+                    Padding = new Thickness(7, 3, 7, 3),
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Margin = new Thickness(0, 8, 8, 0)
+                };
+                durationBadge.Child = new TextBlock
+                {
+                    Text = durVal + "p",
+                    FontSize = 11,
+                    FontWeight = FontWeights.Bold,
+                    Foreground = Brushes.White
+                };
+                posterContainer.Children.Add(durationBadge);
+            }
+
+            // Thong tin chi tiet
             StackPanel details = new StackPanel
             {
-                Margin = new Thickness(12, 11, 12, 12)
+                Margin = new Thickness(14, 12, 14, 14)
+            };
+
+            // The loai pill
+            Border genreBadge = new Border
+            {
+                Background = new SolidColorBrush(Color.FromRgb(219, 234, 254)),
+                CornerRadius = new CornerRadius(4),
+                Padding = new Thickness(8, 2, 8, 2),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(0, 0, 0, 6)
+            };
+            genreBadge.Child = new TextBlock
+            {
+                Text = string.IsNullOrWhiteSpace(genre) ? "Phim chiếu rạp" : genre,
+                FontSize = 11,
+                FontWeight = FontWeights.SemiBold,
+                Foreground = new SolidColorBrush(Color.FromRgb(30, 64, 175)),
+                TextTrimming = TextTrimming.CharacterEllipsis,
+                MaxWidth = 180
             };
 
             TextBlock titleText = new TextBlock
@@ -250,76 +358,66 @@ namespace PhenikaaCinema
                 Text = title,
                 FontSize = 15,
                 FontWeight = FontWeights.Bold,
-                Foreground = Brushes.White,
+                Foreground = new SolidColorBrush(Color.FromRgb(30, 41, 59)),
                 TextWrapping = TextWrapping.Wrap,
-                MaxHeight = 44
+                TextTrimming = TextTrimming.CharacterEllipsis,
+                MaxHeight = 42,
+                Margin = new Thickness(0, 0, 0, 4)
             };
 
-            TextBlock genreText = new TextBlock
+            // Format date
+            string dateStr = "";
+            if (!string.IsNullOrWhiteSpace(releaseDate))
             {
-                Text = string.IsNullOrWhiteSpace(genre)
-                    ? "Phim điện ảnh"
-                    : genre,
-                FontSize = 12,
-                Foreground = new SolidColorBrush(
-                    Color.FromRgb(180, 180, 190)),
-                Margin = new Thickness(0, 7, 0, 3),
-                TextWrapping = TextWrapping.Wrap
-            };
+                if (DateTime.TryParse(releaseDate, out DateTime dt))
+                    dateStr = "Khởi chiếu: " + dt.ToString("dd/MM/yyyy");
+                else
+                    dateStr = "Khởi chiếu: " + releaseDate;
+            }
 
             TextBlock dateText = new TextBlock
             {
-                Text = releaseDate,
+                Text = string.IsNullOrEmpty(dateStr) ? "Đang cập nhật" : dateStr,
                 FontSize = 11,
-                Foreground = new SolidColorBrush(
-                    Color.FromRgb(145, 145, 155)),
-                Margin = new Thickness(0, 2, 0, 0)
+                Foreground = new SolidColorBrush(Color.FromRgb(100, 116, 139)),
+                Margin = new Thickness(0, 0, 0, 12)
             };
 
-            Grid buttonGrid = new Grid
-            {
-                Margin = new Thickness(0, 12, 0, 0)
-            };
+            // Nút Thao tác: Chi tiết & Đặt vé
+            Grid buttonGrid = new Grid();
             buttonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             buttonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(8) });
-            buttonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            buttonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.3, GridUnitType.Star) });
 
             Button detailButton = new Button
             {
                 Content = "Chi tiết",
-                Height = 32,
-                Background = new SolidColorBrush(Color.FromRgb(45, 45, 50)),
-                Foreground = Brushes.White,
-                BorderThickness = new Thickness(0),
+                Height = 34,
+                Background = new SolidColorBrush(Color.FromRgb(241, 245, 249)),
+                Foreground = new SolidColorBrush(Color.FromRgb(30, 41, 59)),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(226, 232, 240)),
+                BorderThickness = new Thickness(1),
                 Cursor = System.Windows.Input.Cursors.Hand,
-                FontSize = 12
+                FontSize = 12,
+                FontWeight = FontWeights.SemiBold
             };
 
             detailButton.Click += (sender, args) =>
             {
                 string message = title;
+                if (!string.IsNullOrWhiteSpace(genre)) message += "\nThể loại: " + genre;
+                if (!string.IsNullOrWhiteSpace(releaseDate)) message += "\nNgày phát hành: " + releaseDate;
+                if (!string.IsNullOrWhiteSpace(duration)) message += "\nThời lượng: " + duration + " phút";
+                if (!string.IsNullOrWhiteSpace(description)) message += "\n\n" + description;
 
-                if (!string.IsNullOrWhiteSpace(genre))
-                    message += "\nThể loại: " + genre;
-
-                if (!string.IsNullOrWhiteSpace(releaseDate))
-                    message += "\nNgày phát hành: " + releaseDate;
-
-                if (!string.IsNullOrWhiteSpace(description))
-                    message += "\n\n" + description;
-
-                MessageBox.Show(
-                    message,
-                    "Thông tin phim",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
+                MessageBox.Show(message, "Thông tin phim", MessageBoxButton.OK, MessageBoxImage.Information);
             };
 
             Button bookButton = new Button
             {
                 Content = "Đặt vé",
-                Height = 32,
-                Background = new SolidColorBrush(Color.FromRgb(229, 9, 20)),
+                Height = 34,
+                Background = new SolidColorBrush(Color.FromRgb(249, 115, 22)),
                 Foreground = Brushes.White,
                 FontWeight = FontWeights.Bold,
                 BorderThickness = new Thickness(0),
@@ -335,7 +433,8 @@ namespace PhenikaaCinema
                     MovieId = parsedId,
                     Title = title,
                     GenreNames = genre,
-                    Description = description
+                    Description = description,
+                    PosterUrl = posterUrl
                 };
 
                 var showtimeWindow = new PhenikaaCinema.Views.Booking.ShowtimeSelectionWindow(movieDto, SessionManager.CurrentUser)
@@ -350,20 +449,16 @@ namespace PhenikaaCinema
             buttonGrid.Children.Add(detailButton);
             buttonGrid.Children.Add(bookButton);
 
+            details.Children.Add(genreBadge);
             details.Children.Add(titleText);
-            details.Children.Add(genreText);
-
-            if (!string.IsNullOrWhiteSpace(releaseDate))
-                details.Children.Add(dateText);
-
+            details.Children.Add(dateText);
             details.Children.Add(buttonGrid);
 
-            content.Children.Add(poster);
+            content.Children.Add(posterContainer);
             content.Children.Add(details);
 
             card.Child = content;
             card.ToolTip = "Mã phim: " + movieId;
-
             return card;
         }
 
@@ -371,17 +466,22 @@ namespace PhenikaaCinema
         {
             return new Border
             {
-                Width = 320,
-                Padding = new Thickness(18),
-                Margin = new Thickness(0, 0, 12, 12),
-                Background = new SolidColorBrush(
-                    Color.FromRgb(27, 27, 34)),
-                CornerRadius = new CornerRadius(8),
+                Width = 340,
+                Padding = new Thickness(24),
+                Margin = new Thickness(0, 0, 16, 16),
+                Background = Brushes.White,
+                BorderBrush = new SolidColorBrush(Color.FromRgb(226, 232, 240)),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(12),
+                Effect = new DropShadowEffect { BlurRadius = 16, ShadowDepth = 2, Direction = 270, Color = Colors.Black, Opacity = 0.08 },
                 Child = new TextBlock
                 {
                     Text = message,
-                    Foreground = Brushes.White,
-                    TextWrapping = TextWrapping.Wrap
+                    Foreground = new SolidColorBrush(Color.FromRgb(100, 116, 139)),
+                    FontSize = 13,
+                    TextWrapping = TextWrapping.Wrap,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    TextAlignment = TextAlignment.Center
                 }
             };
         }

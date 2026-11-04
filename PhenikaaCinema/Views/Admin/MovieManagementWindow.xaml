@@ -189,8 +189,34 @@
                         <TextBlock Text="Ngày kết thúc phát hành" Style="{StaticResource FieldLabel}"/>
                         <DatePicker x:Name="EndDatePicker"/>
 
-                        <TextBlock Text="Đường dẫn poster" Style="{StaticResource FieldLabel}"/>
-                        <TextBox x:Name="PosterUrlTextBox" MaxLength="500"/>
+                        <TextBlock Text="Hình ảnh Poster phim" Style="{StaticResource FieldLabel}"/>
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="PosterUrlTextBox" MaxLength="500" 
+                                     ToolTip="Nhập link ảnh hoặc bấm nút Chọn ảnh từ máy tính"
+                                     TextChanged="PosterUrlTextBox_TextChanged"/>
+                            <Button Grid.Column="1" Content="📁 Chọn ảnh..." 
+                                    Style="{StaticResource ActionButton}" 
+                                    Margin="8,0,0,0" Padding="12,0" Height="36"
+                                    Click="BrowsePosterButton_Click"/>
+                        </Grid>
+
+                        <!-- Khung xem trước poster -->
+                        <Border BorderBrush="#D5E2EE" BorderThickness="1" CornerRadius="8" 
+                                Background="#F8FAFC" Height="140" Margin="0,0,0,10" ClipToBounds="True">
+                            <Grid>
+                                <StackPanel x:Name="PosterPlaceholderPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="🖼" FontSize="26" HorizontalAlignment="Center" Foreground="#94A3B8"/>
+                                    <TextBlock Text="Chưa chọn ảnh poster" FontSize="11" Foreground="#94A3B8" 
+                                               HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                <Image x:Name="PosterPreviewImage" Stretch="Uniform" 
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
 
                         <TextBlock Text="Đường dẫn trailer" Style="{StaticResource FieldLabel}"/>
                         <TextBox x:Name="TrailerUrlTextBox" MaxLength="500"/>

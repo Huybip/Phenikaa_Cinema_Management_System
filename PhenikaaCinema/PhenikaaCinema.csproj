@@ -120,10 +120,10 @@
       <DependentUpon>UserManagementWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowNavigation.cs" />
-    <Compile Include="SessionManager.cs" />
-    <Compile Include="DateTimeHelper.cs" />
-    <Compile Include="CurrencyHelper.cs" />
-    <Compile Include="ValidationHelper.cs" />
+    <Compile Include="Helpers\SessionManager.cs" />
+    <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\CurrencyHelper.cs" />
+    <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="Services\MovieService.cs" />
     <Compile Include="Services\GenreService.cs" />
     <Compile Include="Services\ShowtimeService.cs" />
@@ -265,7 +265,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AuthService.cs" />
+    <Compile Include="Services\AuthService.cs" />
     <Compile Include="Views\Customer\CustomerWindow.xaml.cs">
       <DependentUpon>CustomerWindow.xaml</DependentUpon>
     </Compile>
@@ -408,6 +408,10 @@
 </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="App.config.example" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\phenikaa_logo.png" />
 </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -26,6 +26,9 @@
 
                 <!-- LOGO -->
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="White" CornerRadius="8" Width="36" Height="36" Margin="0,0,10,0" Padding="2" BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
+                        <Image Source="/Assets/phenikaa_logo.png" Stretch="Uniform"/>
+                    </Border>
                     <TextBlock Text="PHENIKAA" Foreground="{StaticResource PrimaryBlue}" FontSize="22" FontWeight="Black" Margin="0,0,6,0"/>
                     <TextBlock Text="CINEMA" Foreground="{StaticResource AccentOrange}" FontSize="22" FontWeight="Bold"/>
                     <Border Background="{StaticResource LightBlue}" CornerRadius="6" Padding="8,3" Margin="14,0,0,0" VerticalAlignment="Center">
