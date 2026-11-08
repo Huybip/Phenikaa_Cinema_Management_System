@@ -134,6 +134,7 @@ namespace PhenikaaCinema.Views.Customer
             {
                 SelectedBookingInfoText.Text = "(Chưa chọn đơn nào)";
                 BtnViewTickets.IsEnabled = false;
+                BtnPrintInvoice.IsEnabled = false;
                 BtnPayNow.IsEnabled = false;
                 BtnCancelBooking.IsEnabled = false;
                 return;
@@ -141,9 +142,23 @@ namespace PhenikaaCinema.Views.Customer
 
             SelectedBookingInfoText.Text = $"{item.BookingCode} - {item.MovieTitle} ({item.FormattedTotal})";
 
-            BtnViewTickets.IsEnabled = string.Equals(item.Status, "Confirmed", StringComparison.OrdinalIgnoreCase) || item.TicketCount > 0;
+            bool isConfirmed = string.Equals(item.Status, "Confirmed", StringComparison.OrdinalIgnoreCase);
+            BtnViewTickets.IsEnabled = isConfirmed || item.TicketCount > 0;
+            BtnPrintInvoice.IsEnabled = isConfirmed;
             BtnPayNow.IsEnabled = item.CanPay;
             BtnCancelBooking.IsEnabled = item.CanCancel;
+        }
+
+        private void BtnPrintInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = BookingsDataGrid.SelectedItem as BookingDetailDto;
+            if (selected == null) return;
+
+            var window = new InvoiceWindow(selected.BookingId)
+            {
+                Owner = Window.GetWindow(this)
+            };
+            window.ShowDialog();
         }
 
         private void BtnViewTickets_Click(object sender, RoutedEventArgs e)

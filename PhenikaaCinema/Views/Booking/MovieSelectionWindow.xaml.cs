@@ -103,19 +103,15 @@ namespace PhenikaaCinema.Views.Booking
             var posterGrid = new Grid();
 
             bool imageLoaded = false;
-            if (!string.IsNullOrWhiteSpace(movie.PosterUrl))
+            if (movie.PosterImageSource != null)
             {
-                try
+                var image = new Image
                 {
-                    var image = new Image
-                    {
-                        Source = new BitmapImage(new Uri(movie.PosterUrl, UriKind.RelativeOrAbsolute)),
-                        Stretch = Stretch.UniformToFill
-                    };
-                    posterGrid.Children.Add(image);
-                    imageLoaded = true;
-                }
-                catch { }
+                    Source = movie.PosterImageSource,
+                    Stretch = Stretch.UniformToFill
+                };
+                posterGrid.Children.Add(image);
+                imageLoaded = true;
             }
 
             if (!imageLoaded)

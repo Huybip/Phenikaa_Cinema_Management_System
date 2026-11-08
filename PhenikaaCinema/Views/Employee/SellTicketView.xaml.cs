@@ -368,11 +368,20 @@ namespace PhenikaaCinema.Views.Employee
                 return;
             }
 
-            MessageBox.Show(
-                $"Bán vé thành công!\nMã đơn: {payResult.BookingCode}\nSố lượng vé: {payResult.Tickets.Count}\nTổng tiền: {CurrencyHelper.FormatVnd(payResult.PaidAmount)}",
-                "Thành công",
-                MessageBoxButton.OK,
+            MessageBoxResult printChoice = MessageBox.Show(
+                $"Bán vé thành công!\nMã đơn: {payResult.BookingCode}\nSố lượng vé: {payResult.Tickets.Count}\nTổng tiền: {CurrencyHelper.FormatVnd(payResult.PaidAmount)}\n\nBạn có muốn IN HÓA ĐƠN cho khách hàng ngay bây giờ không?",
+                "Bán vé thành công",
+                MessageBoxButton.YesNo,
                 MessageBoxImage.Information);
+
+            if (printChoice == MessageBoxResult.Yes)
+            {
+                var invoiceWin = new PhenikaaCinema.Views.Booking.InvoiceWindow(payResult.BookingId, "Tiền mặt tại quầy")
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                invoiceWin.ShowDialog();
+            }
 
             var ticketWin = new TicketDetailWindow(payResult.BookingId);
             ticketWin.ShowDialog();

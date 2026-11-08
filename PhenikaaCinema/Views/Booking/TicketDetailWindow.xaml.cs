@@ -12,6 +12,7 @@ namespace PhenikaaCinema.Views.Booking
     {
         private readonly int? _bookingId;
         private readonly string _ticketCode;
+        private int? _resolvedBookingId;
         private readonly TicketService _ticketService = new TicketService();
 
         public TicketDetailWindow(int bookingId)
@@ -40,12 +41,17 @@ namespace PhenikaaCinema.Views.Booking
 
                 if (_bookingId.HasValue)
                 {
+                    _resolvedBookingId = _bookingId.Value;
                     tickets = _ticketService.GetTicketsByBookingId(_bookingId.Value);
                 }
                 else if (!string.IsNullOrWhiteSpace(_ticketCode))
                 {
                     var singleTicket = _ticketService.GetTicketByCode(_ticketCode);
-                    if (singleTicket != null) tickets.Add(singleTicket);
+                    if (singleTicket != null)
+                    {
+                        _resolvedBookingId = singleTicket.BookingId;
+                        tickets.Add(singleTicket);
+                    }
                 }
 
                 RenderTickets(tickets);
@@ -232,6 +238,23 @@ namespace PhenikaaCinema.Views.Booking
             catch (Exception ex)
             {
                 MessageBox.Show("Không thể in vé: " + ex.Message, "Lỗi in", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void PrintInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            int targetBookingId = _bookingId ?? _resolvedBookingId ?? 0;
+            if (targetBookingId > 0)
+            {
+                var invoiceWindow = new InvoiceWindow(targetBookingId)
+                {
+                    Owner = this
+                };
+                invoiceWindow.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy thông tin đơn hàng tương ứng để in hóa đơn.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

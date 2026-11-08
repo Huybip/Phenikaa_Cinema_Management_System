@@ -23,25 +23,14 @@ namespace PhenikaaCinema.Views.Graphics
             PosterTitleText.Text = movie.Title;
             PosterGenreText.Text = $"{movie.DisplayGenres} • {movie.FormattedDuration}";
 
-            if (!string.IsNullOrWhiteSpace(movie.PosterUrl))
+            if (movie.PosterImageSource != null)
             {
-                try
-                {
-                    var bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(movie.PosterUrl, UriKind.RelativeOrAbsolute);
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.EndInit();
-                    PosterImage.Source = bitmap;
-                    PosterFallbackIcon.Visibility = Visibility.Collapsed;
-                }
-                catch
-                {
-                    PosterFallbackIcon.Visibility = Visibility.Visible;
-                }
+                PosterImage.Source = movie.PosterImageSource;
+                PosterFallbackIcon.Visibility = Visibility.Collapsed;
             }
             else
             {
+                PosterImage.Source = null;
                 PosterFallbackIcon.Visibility = Visibility.Visible;
             }
         }

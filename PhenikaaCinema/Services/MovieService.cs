@@ -1,3 +1,6 @@
+using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,6 +25,46 @@ namespace PhenikaaCinema.Services
         public string FormattedDuration => $"{DurationMinutes} phút";
         public string FormattedReleaseDate => ReleaseDate.HasValue ? ReleaseDate.Value.ToString("dd/MM/yyyy") : "Đang cập nhật";
         public string DisplayGenres => string.IsNullOrWhiteSpace(GenreNames) ? "Phim chiếu rạp" : GenreNames;
+
+        public ImageSource PosterImageSource
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(PosterUrl)) return null;
+                try
+                {
+                    var bmp = new BitmapImage();
+                    bmp.BeginInit();
+                    bmp.CacheOption = BitmapCacheOption.OnLoad;
+                    if (PosterUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+                        PosterUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                    {
+                        bmp.UriSource = new Uri(PosterUrl, UriKind.Absolute);
+                    }
+                    else
+                    {
+                        string fullPath = Path.IsPathRooted(PosterUrl)
+                            ? PosterUrl
+                            : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PosterUrl.TrimStart('\\', '/'));
+
+                        if (File.Exists(fullPath))
+                        {
+                            bmp.UriSource = new Uri(fullPath, UriKind.Absolute);
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    bmp.EndInit();
+                    return bmp;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
     }
 
     public class MovieService

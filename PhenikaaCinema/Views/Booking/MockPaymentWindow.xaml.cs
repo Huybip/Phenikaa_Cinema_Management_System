@@ -66,14 +66,26 @@ namespace PhenikaaCinema.Views.Booking
                     return;
                 }
 
-                MessageBox.Show(
+                MessageBoxResult printChoice = MessageBox.Show(
                     "Thanh toán thành công!\n" +
                     $"Mã giao dịch: {result.TransactionCode}\n" +
                     $"Số tiền đã thanh toán: {CurrencyHelper.FormatVnd(result.PaidAmount)}\n\n" +
-                    "Hệ thống đã phát hành vé xem phim cho bạn.",
+                    "Hệ thống đã phát hành vé xem phim cho bạn.\n" +
+                    "Bạn có muốn IN HÓA ĐƠN thanh toán ngay bây giờ không?",
                     "Thanh toán thành công",
-                    MessageBoxButton.OK,
+                    MessageBoxButton.YesNo,
                     MessageBoxImage.Information);
+
+                if (printChoice == MessageBoxResult.Yes)
+                {
+                    string paymentMethod = RadioVnpay.IsChecked == true ? "VNPAY / Thẻ nội địa" :
+                                           RadioMomo.IsChecked == true ? "Ví MoMo / ZaloPay" : "Tiền mặt tại quầy";
+                    var invoiceWindow = new InvoiceWindow(_bookingId, paymentMethod)
+                    {
+                        Owner = this.Owner
+                    };
+                    invoiceWindow.ShowDialog();
+                }
 
                 // Mở TicketDetailWindow
                 var ticketWindow = new TicketDetailWindow(_bookingId)
