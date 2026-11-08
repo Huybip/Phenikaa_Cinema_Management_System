@@ -255,6 +255,7 @@ namespace PhenikaaCinema
                             HorizontalAlignment = HorizontalAlignment.Center,
                             VerticalAlignment = VerticalAlignment.Center
                         };
+                        RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.HighQuality);
                         posterContainer.Children.Add(img);
                         imageLoaded = true;
                     }

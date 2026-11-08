@@ -1,4 +1,4 @@
-﻿<Window x:Class="PhenikaaCinema.Views.Booking.MovieSelectionWindow"
+<Window x:Class="PhenikaaCinema.Views.Booking.MovieSelectionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Chọn phim - PHENIKAA CINEMA" Height="780" Width="1100"
@@ -27,7 +27,7 @@
                 <!-- LOGO -->
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Border Background="White" CornerRadius="8" Width="36" Height="36" Margin="0,0,10,0" Padding="2" BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
-                        <Image Source="/Assets/phenikaa_logo.png" Stretch="Uniform"/>
+                        <Image Source="/Assets/phenikaa_emblem.png" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Border>
                     <TextBlock Text="PHENIKAA" Foreground="{StaticResource PrimaryBlue}" FontSize="22" FontWeight="Black" Margin="0,0,6,0"/>
                     <TextBlock Text="CINEMA" Foreground="{StaticResource AccentOrange}" FontSize="22" FontWeight="Bold"/>

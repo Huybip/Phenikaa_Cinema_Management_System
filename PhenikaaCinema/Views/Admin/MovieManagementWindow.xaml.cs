@@ -629,8 +629,8 @@ namespace PhenikaaCinema.Views.Admin
             {
                 var dialog = new OpenFileDialog
                 {
-                    Title = "Chọn ảnh poster phim",
-                    Filter = "Tệp hình ảnh (*.jpg;*.jpeg;*.png;*.webp;*.bmp)|*.jpg;*.jpeg;*.png;*.webp;*.bmp|Tất cả tệp (*.*)|*.*",
+                    Title = "Chọn ảnh poster phim (JPG, PNG, JFIF, WEBP, BMP)",
+                    Filter = "Tất cả tệp hình ảnh (*.jpg;*.jpeg;*.jfif;*.png;*.webp;*.bmp)|*.jpg;*.jpeg;*.jfif;*.png;*.webp;*.bmp|Ảnh JPEG / JFIF (*.jpg;*.jpeg;*.jfif)|*.jpg;*.jpeg;*.jfif|Ảnh PNG (*.png)|*.png|Tất cả tệp (*.*)|*.*",
                     Multiselect = false
                 };
 
@@ -646,6 +646,12 @@ namespace PhenikaaCinema.Views.Admin
                     }
 
                     string ext = Path.GetExtension(selectedFile);
+                    if (string.Equals(ext, ".jfif", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Chuẩn hóa đuôi .jfif sang .jpg để tương thích tối đa với mọi bộ giải mã và trình xem ảnh
+                        ext = ".jpg";
+                    }
+
                     string safeFileName = "poster_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_" + Guid.NewGuid().ToString().Substring(0, 6) + ext;
                     string destPath = Path.Combine(postersDir, safeFileName);
 

@@ -21,7 +21,7 @@
             <Grid VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Border Background="White" CornerRadius="6" Width="32" Height="32" Margin="0,0,10,0" Padding="2" BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
-                        <Image Source="/Assets/phenikaa_logo.png" Stretch="Uniform"/>
+                        <Image Source="/Assets/phenikaa_emblem.png" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Border>
                     <TextBlock Text="PHENIKAA CINEMA" Foreground="{StaticResource PrimaryBlue}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
                     <TextBlock Text=" | Hóa đơn thanh toán" Foreground="{StaticResource TextSecondary}" FontSize="14" VerticalAlignment="Center" Margin="6,0,0,0"/>
@@ -50,7 +50,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Border Width="64" Height="64" CornerRadius="8" Background="White" Margin="0,0,16,0" VerticalAlignment="Center" Padding="4" BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
-                            <Image Source="/Assets/phenikaa_logo.png" Stretch="Uniform"/>
+                            <Image Source="/Assets/phenikaa_emblem.png" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Border>
 
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">

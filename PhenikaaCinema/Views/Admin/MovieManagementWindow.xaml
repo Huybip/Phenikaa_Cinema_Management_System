@@ -1,4 +1,4 @@
-﻿<Window x:Class="PhenikaaCinema.Views.Admin.MovieManagementWindow"
+<Window x:Class="PhenikaaCinema.Views.Admin.MovieManagementWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PHENIKAA CINEMA | Quản lý phim"
@@ -214,6 +214,7 @@
                                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                                 </StackPanel>
                                 <Image x:Name="PosterPreviewImage" Stretch="Uniform" 
+                                       RenderOptions.BitmapScalingMode="HighQuality"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
