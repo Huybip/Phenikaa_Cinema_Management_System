@@ -26,12 +26,16 @@ namespace PhenikaaCinema.Services
         public string FormattedDate => StartTimeVn.ToString("dd/MM/yyyy");
         public string FormattedPrice => CurrencyHelper.FormatVnd(BasePrice);
         public bool IsAvailable => Status == "Scheduled" && StartTimeUtc > DateTime.UtcNow;
+
+        /// <summary>Hiển thị đầy đủ: Tên phim — dd/MM/yyyy HH:mm ~ HH:mm — Phòng (dùng cho ComboBox/DataGrid binding)</summary>
+        public string FormattedShowtime => $"{MovieTitle}  |  {StartTimeVn:dd/MM/yyyy  HH:mm} ~ {EndTimeVn:HH:mm}  |  {RoomName}";
     }
 
     public class ShowtimeService
     {
         public List<ShowtimeDto> GetAvailableShowtimes(int? movieId = null, DateTime? date = null)
         {
+            // Lấy tất cả suất chiếu Scheduled từ 00:00 hôm nay trở đi (không lọc đã qua giờ, để hiển thị đủ suất trong ngày)
             string sql = @"
                 SELECT st.ShowtimeId, st.MovieId, m.Title AS MovieTitle, m.DurationMinutes,
                        st.RoomId, r.RoomName, r.Capacity AS RoomCapacity,
@@ -40,7 +44,7 @@ namespace PhenikaaCinema.Services
                 INNER JOIN dbo.Movies m ON st.MovieId = m.MovieId
                 INNER JOIN dbo.Rooms r ON st.RoomId = r.RoomId
                 WHERE st.Status = 'Scheduled'
-                  AND st.StartTimeUtc > SYSUTCDATETIME()
+                  AND st.StartTimeUtc >= CAST(GETUTCDATE() AS DATE)
                   AND (@MovieId IS NULL OR st.MovieId = @MovieId)
                 ORDER BY st.StartTimeUtc ASC";
 
